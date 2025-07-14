@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 4 | Aryaveer</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            
+            <h1>Aryaveer's Digital Fabrication Journey</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../about.html">About</a></li>
+                <li><a href="../final-project.html">Final Project</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="week-header">
+            <h2>Week 4:Electronics Prduction</h2>
+            <p class="week-date"></p>
+        </section>
+
+        <section class="week-content">
+             <article class="week-documentation">
+                <h3>Project1</h3>
+                 
+                 <p>
+                    This week we were tasked with doing a micro controller programming .I could have choosen to continue and just add a motor onto my project and call it a day.But being the oversmart (not in a good way)kid I am  I decide to burden myself with a troublesome amounnt of work just enough amount of work that I woulld ponder about how to go on with it for the entirety of my week.I am making an RFID SENSOR that is it uses a card to to act as an open and close.I use ton of Pin to Pin wires connecting it to the required boards.    <img width="100%" src="./e11.jpg" alt="e11">
+                    Using a bunch of help from SIR BOBBY and random nerd I made somwhat of a progress .But more was neccessary.A lot more.I spent countless hours coding the program to work but to no success.
+                    Somehow the problem in my code just seemed to be that I had downloaded the wrong library from it .An hour wasted.But thanks again to SIR BOBBY for helping me out .
+                    After the long montonus hours of working .
+                    I had done it ,I had accomplished my goal.
+                        <img width="100%" src="./e12.jpg" alt="e12">
+                    Here is the explaination/documentation.of the work:
+                    First connect
+                    the SDA to GPIO5 which acts as data input point.
+                    Then connect the SCK to the GPIO 18 that is the SPI clock.
+                    Then connect MOSI and GPIO23  that is the SPI data input .Follow on with MISO to GPIO 19 for SPI master-in-slave-out, I2C serial clock, or UART serial output.
+                    Then IRQ  should not be connected sinceInterrupt pin; signals the microcontroller when an RFID tag is nearby.
+                    Then RST to GPIO 21  for LOW signal to put the module in power-down mode; send a HIGH signal to reset the module.
+                    Follow on with GND to GND .Lastly 3.3V to 3.3V  as Power supply (2.5-3.3V)
+                    <img width="100%" src="./e13.jpg" alt="e13">
+                    Here is the code:
+                    as an image 
+                    <img width="100%" src="./e14.jpg" alt="e14">
+                    A video showing how it works:
+                    <video width="500" height="360" controls>
+                <source src="e15.mp4" type="video/mp4" autoplay>
+                Your browser does not support the video tag.
+                </video>
+                </p>  
+               
+                </div>
+            </article>
+            
+            <article class="week-documentation">
+                <h3>Project2 </h3>
+                 
+                 <p>
+                 The plan looked simple on paper connect a bunch of wires onto the breadboard usse a potentiometer to control flow of cuurent .Use a micro controller attach it to the motor and an ultra sonic sensor that starts the motor when you are close it .Also dont forget to connect it to your laptop that is your power source.You wil be suprise by the number of times it has happened to me .
+                 <img width="75%" src="./e1.jpg" alt="e1">.But I am not.I am writing this code while I am doing the project itsel on 14th July.I have started on 1:33 .I finished it at 1:45.Just 12 minutes .
+                 I just connected a few wires to their respective pinouts as it is for the xiao .
+                 Since this is an additonal project I havent added much detailing to it asthe first one.
+                 <img width="75%" src="./e2.jpg" alt="e2">
+                 <br>Also,heres the code </br>
+                <img width="100%" src="./e3.jpg" alt="e3">
+                </p>  
+                </div>
+            </article>
+            
+            
+               
+            
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2025 Aryaveer | PS70: Digital Fabrication</p>
+    </footer>
+</body>
+</html>
