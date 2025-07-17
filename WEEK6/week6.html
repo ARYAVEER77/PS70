@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 6| Aryaveer</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            
+            <h1>Aryaveer's Digital Fabrication Journey</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../about.html">About</a></li>
+                <li><a href="../final-project.html">Final Project</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="week-header">
+            <h2>Week 6:Electronics Design</h2>
+            <p class="week-date"></p>
+        </section>
+
+        <section class="week-content">
+             <article class="week-documentation">
+                <h3>THE DISTANCE SENSOR!!: </h3>
+                 
+                 <p>
+                    This week we had to create  a sensor to measure a physical quantity with our microcontroller.
+                    <br>Firstly,The idea of making an ultra sonic sensor seemed impossible to me at first .Plugging in diffrent values into code ,the wiring and much more seemed to be an insurmountable mountain.How did I get overcome it you ask? Worked 8 long hours on an off day.Fisrt I scavenged my materials.I got a breadbord,my trusted xiao ,a usb caable a bunch of wires .Pin to pin wires.I took some help from Bobby but got on the way of my work.It took some amount of work and tutorials to go through before I could connect my sensor to the board and make sure I wired it properly.Taking careful and measured steps on the connection.Connecting the VCC and Trigg was the most difficult and important point for me.OIt is also where I made the most mistakes in connecting the wires.I also made the mistake of connecting the wire to the 5volts instead of the 3.3 volts.After spening a few hours I finished my project or so I thought .But I was suprised by the fact that there were 3 other people that had done the same proximity project but Iwas gunning for that CHECK++ .So I decided to add an Oled display to my project the wiring wasnt as hard I thought it would be but connecting the SCL and SDA were the most important pieces for establishing a connection.
+                     <img src="./p1.jpg" alt="p1" width="400" height="200"></br>  
+                     Now came the one part which most of us I assume or atleast I struggle with that is the coding part .Therefor I did the hardwork so you can see the code.Here it is in its entirety:
+                     <pre><code class="language-arduino">
+#include <Wire.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_SSD1306.h>
+
+// OLED Configuration
+#define SCREEN_WIDTH 128
+#define SCREEN_HEIGHT 64
+#define OLED_RESET -1
+#define SCREEN_ADDRESS 0x3C
+Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
+
+// Ultrasonic Sensor Configuration
+const int trigPin = D3;
+const int echoPin = D0;
+
+//define sound speed in cm/uS
+#define SOUND_SPEED 0.034
+#define CM_TO_INCH 0.393701
+
+long duration;
+float distanceCm;
+float distanceInch;
+
+void setup() {
+  Serial.begin(115200);
+  
+  // Initialize OLED
+  if(!display.begin(SSD1306_SWITCHCAPVCC, SCREEN_ADDRESS)) {
+    Serial.println(F("SSD1306 allocation failed"));
+    for(;;); // Don't proceed, loop forever
+    Serial.println(distanceCm);
+  }
+  
+  // Clear the display buffer
+  display.clearDisplay();
+  
+  // Initialize ultrasonic sensor pins
+  pinMode(trigPin, OUTPUT);
+  pinMode(echoPin, INPUT);
+  
+  // Show initial message
+  display.setTextSize(1);
+  display.setTextColor(SSD1306_WHITE);
+  display.setCursor(0,0);
+  display.println("Ultrasonic Sensor");
+  display.println("Initializing...");
+  display.display();
+  delay(1000);
+}
+
+void loop() {
+  // Clear the trigPin
+  digitalWrite(trigPin, LOW);
+  delayMicroseconds(2);
+  
+  // Sets the trigPin on HIGH state for 10 micro seconds
+  digitalWrite(trigPin, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trigPin, LOW);
+  
+  // Reads the echoPin, returns the sound wave travel time in microseconds
+  duration = pulseIn(echoPin, HIGH);
+  
+  // Calculate the distance
+  distanceCm = duration * SOUND_SPEED/2;
+  
+  // Convert to inches
+  distanceInch = distanceCm * CM_TO_INCH;
+  
+  // Update OLED display
+  display.clearDisplay();
+  
+  // Display distance in cm (large font)
+  display.setTextSize(2);
+  display.setCursor(0, 0);
+  display.print("Distance:");
+  
+  display.setTextSize(3);
+  display.setCursor(0, 25);
+  display.print(distanceCm);
+  display.print(" cm");
+  
+  // Display distance in inches (small font)
+  display.setTextSize(1);
+  display.setCursor(0, 55);
+  display.print("Inches: ");
+  display.print(distanceInch);
+  
+  display.display();
+  
+  // Print to serial monitor for debugging
+  Serial.print("Distance (cm): ");
+  Serial.println(distanceCm);
+  Serial.print("Distance (inch): ");
+  Serial.println(distanceInch);
+  
+  delay(500); // Update every 500ms
+}
+</code></pre>    
+<img src="./p2.jpg" alt="p2" width="400" height="200"></br>  
+Now,I add the additional information and data I was supposed to add for this assignment such as the mi,max values the range and a graph.
+<br>Min value=0.0 cm
+<br>Max value=799.7 cm
+<br>Range=Max value
+<br>Graph:
+<br><img src="./p7.jpg" alt="p2" width="400" height="200"></br> 
+ <video width="500" height="360" controls>
+                <source src="P4.mp4" type="video/mp4" autoplay>
+                Your browser does not support the video tag.
+                </video>
+                  </p>  
+               
+                </div>
+            </article>
+            
+            <article class="week-documentation">
+                <h3>Part 2: </h3>
+                 <p>
+                     Then for the second part of the Assignment I built a capactive sensor that works on touch/pressure:
+                     <img width="100%" src="./p3.jpg" alt="e3">
+                     Heres how I went onto buid it .Fistly,I gathered the required materials 
+                      <br>1.Copper strips
+                      <br>2.Alligators clips
+                      <br>3.RGB LIGHT
+                      <br>4.FOAM
+                      <br>5.Others:The XIAO,Pin to Pin wires & a usb cable
+                      These were the essentials .
+                       <br>How did I begin you ask.
+                      <br>I started of by going over the pin layout of the xiao and created a rough diagram of it and its functioning on a piece of tissue.
+                      <br>My model is to work like a cushion on which pressure is applied and thhe amount of pressure apllied dictates the light displayed by the RGB .So low  pressure=Red ,Medium Pressure=Green and High Pressure = Blue .I ended up 
+                        <img width="100%" src="./p6.jpg" alt="e3">
+                    The code did take up some time but was doable.
+
+                      <pre><code class="language-arduino">
+                      /*
+ * Complete Pressure-Sensitive RGB Controller
+ * With High Score Monitoring
+ * For XIAO ESP32C3
+ */
+
+// LED Configuration
+#define COMMON_ANODE false  // Set true if using common anode RGB LED
+const int RED_PIN = D6;
+const int GREEN_PIN = D7;
+const int BLUE_PIN = D8;
+
+// Pressure Sensor
+const int PRESSURE_PIN = A2;
+const int TX_PIN = D3;      // For high score monitoring
+int minPressure = 810;     // ESP32-C3 has 12-bit ADC (0-4095)
+int maxPressure = 1010;
+
+float tx_rx();
+
+void setup() {
+  Serial.begin(115200);
+  
+  // Initialize pins
+  pinMode(RED_PIN, OUTPUT);
+  pinMode(GREEN_PIN, OUTPUT);
+  pinMode(BLUE_PIN, OUTPUT);
+  pinMode(TX_PIN, OUTPUT);
+  pinMode(PRESSURE_PIN, INPUT);
+  
+  // Calibrate sensor
+  // calibrateSensor();
+  
+  Serial.println("System Ready - Apply pressure to sensor");
+}
+
+void loop() {
+  // Read pressure (12-bit value)
+  int rawValue = tx_rx();
+  
+  // // Auto-update calibration
+  // if(rawValue < minPressure) minPressure = rawValue;
+  // if(rawValue > maxPressure) maxPressure = rawValue;
+  
+  // Map to 0-100% pressure
+  int pressure = map(rawValue, minPressure, maxPressure, 0, 100);
+  
+  // // Check for high score
+  // if(monitorNewHighScore()) {
+  //   // Special color pattern for high score
+  //   flashCelebration();
+  // }
+  // else {
+  //   // Normal pressure-color mapping
+  //   updateColor(pressure);
+  // }
+  updateColor(pressure);
+  // Debug output
+  Serial.print("Pressure: ");
+  Serial.print(pressure);
+  Serial.print("% | Raw: ");
+  Serial.println(rawValue);
+  
+  delay(50);
+}
+
+float tx_rx() {
+  int read_high, read_low, diff;
+  long int sum = 0;
+  int N_samples = 100;    
+
+  for (int i = 0; i < N_samples; i++){
+    digitalWrite(TX_PIN, HIGH);              
+    read_high = analogRead(PRESSURE_PIN);     
+    delayMicroseconds(100);                 
+    digitalWrite(TX_PIN, LOW);             
+    read_low = analogRead(PRESSURE_PIN);     
+    diff = read_high - read_low;           
+    sum += diff;                           
+  }
+  
+  // Determine if new high score (adjust threshold as needed)
+  int avg_diff = sum / N_samples;
+  return avg_diff;  // Threshold value
+}
+
+void flashCelebration() {
+  // Rainbow celebration pattern
+  for(int i = 0; i < 3; i++) {
+    setColor(255, 0, 0); delay(100);
+    setColor(0, 255, 0); delay(100);
+    setColor(0, 0, 255); delay(100);
+  }
+}
+
+void updateColor(int pressure) {
+  // Normal pressure-color mapping
+  if(pressure < 33) {
+    setColor(255, 0, 0); // Red
+  } 
+  else if(pressure < 66) {
+    setColor(0, 255, 0); // Green
+  }
+  else if(pressure >66) {
+    setColor(0, 0, 255); // Blue
+  }
+   else  {
+    setColor(0, 0, 255); // Blue
+  }
+}
+
+// void calibrateSensor() {
+//   Serial.println("Calibrating...");
+//   Serial.println("1. Release all pressure (5 seconds)");
+//   delay(5000);
+//   minPressure = analogRead(PRESSURE_PIN);
+  
+//   Serial.println("2. Apply maximum pressure (5 seconds)");
+//   delay(5000);
+//   maxPressure = analogRead(PRESSURE_PIN);
+  
+//   // Ensure minimum range
+//   if(maxPressure - minPressure < 100) {
+//     maxPressure = minPressure + 100;
+//   }
+  
+//   Serial.print("Calibration complete. Range: ");
+//   Serial.print(minPressure);
+//   Serial.print(" - ");
+//   Serial.println(maxPressure);
+// }
+
+void setColor(int red, int green, int blue) {
+  if(COMMON_ANODE) {
+    analogWrite(RED_PIN, 255 - red);
+    analogWrite(GREEN_PIN, 255 - green);
+    analogWrite(BLUE_PIN, 255 - blue);
+  } else {
+    analogWrite(RED_PIN, red);
+    analogWrite(GREEN_PIN, green);
+    analogWrite(BLUE_PIN, blue);
+  }
+}
+                      </code></pre> 
+                      The working:
+                      <video width="500" height="360" controls>
+                <source src="i1.mp4" type="video/mp4" autoplay>
+                Your browser does not support the video tag.
+                </video>
+
+
+                 </p>
+                 
+                </div>
+            </article>
+            
+            
+               
+            
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2025 Aryaveer | PS70: Digital Fabrication</p>
+    </footer>
+</body>
+</html>
