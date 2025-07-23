@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 8| Aryaveer</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            
+            <h1>Aryaveer's Digital Fabrication Journey</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../about.html">About</a></li>
+                <li><a href="../final-project.html">Final Project</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="week-header">
+            <h2>Week 8:CNC MILLING AND MOULD</h2>
+            <p class="week-date"></p>
+        </section>
+
+        <section class="week-content" style = "justify-content: start; margin: 0;">
+             <article class="week-documentation" style = "width:50vw;">
+                <h3>THE Mini Arcade game -MVP</h3>
+                 
+                 <p>
+                    This week we were tasked with creating an object using CNC Milling  
+                   <br>  
+
+Let me tell you about the time Case, Mehemet, and I tried to recreate the Blue Mountains of Jamaica... in wood. 🌳➡️🗻 What started as a cool CAD design quickly turned into a test of human endurance.  
+
+The actual milling? Just **one endless hour** of us standing there like awkward statues, watching the machine do all the work while our muscles slowly petrified. 🧍‍♂️🧍‍♂️🧍‍♂️ You ever tried *not moving* for that long? Turns out it’s weirdly exhausting. My knees staged a full rebellion.  
+
+Then came **The Sawdustening**.  
+
+Somehow, that innocent-looking oak block birthed enough fine powder to fill a sandbox. It was **everywhere**—clinging to our clothes like desperate exes, nesting in our hair, even sneaking into places I won’t mention. 🤧 Mehemet sneezed so hard he scared the workshop supervisor. Case found a wood splinter *in his phone case* a week later.  
+
+The cleanup? A war of attrition. We swept. We vacuumed. We wiped. The more we fought, the more the sawdust seemed to multiply, like some kind of evil, sentient glitter. ✨  
+
+But when we finally stepped back? There they were—our jagged little peaks, rough but unmistakably *mountains*. And despite the sore backs, the itchy noses, and the phantom sawdust we’d still be finding in our socks tomorrow? Worth it.  
+
+Because nothing bonds teammates like shared suffering... and a mutual hatred of airborne wood particles. 🤝💀  
+
+                   
+                   <br> <img src="./p1.jpg" alt="p1" width="300" height="400"></br> 
+                    <h4>Mistakes not Make Again/Why not use Arduino UNO</h4>
+                <ul>
+                    <li>Slow</li>
+                    <li>Does not have Wifi or Bluetooth</li>
+                    <li>Will cause pain and misery for hours .</li>
+                    
+                </ul>
+                    <br>Here is how I went on about with it :
+                    <br>First I took an oled screen two buttons my trusted XIAO or ESP32C3 several pin to pin wires and began.I went through several tutorials on the curcuit diagram .Connecting the SCL and SDA were the most important as well as tiring part of my project .I got my project up and running in just 4 hours .The code was mighty exhaustive the insurmountable mountain I was unable to climb.
+                    <img src="./p2.jpg" alt="p2" width="300" height="400"></br> 
+                    <br>  Now came the one part which most of us I assume or atleast I struggle with that is the coding part .Therefor I did the hardwork so you can see the code.Here it is in its entirety:
+                     <pre><code class="language-arduino">
+  #include <Adafruit_GFX.h>
+#include <Adafruit_SSD1306.h>
+
+#define SCREEN_WIDTH 128
+#define SCREEN_HEIGHT 64
+#define OLED_RESET -1
+Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
+
+// Game elements
+int ballX = 64, ballY = 32;
+int ballSpeedX = 1, ballSpeedY = 1;
+int paddleHeight = 20;
+int paddleWidth = 3;
+int player1Y = 32, player2Y = 32; // Paddle positions
+
+// Button pins (change these to your actual pin numbers)
+#define PLAYER1_UP_BUTTON 4
+#define PLAYER1_DOWN_BUTTON 3
+#define PLAYER2_UP_BUTTON 3
+#define PLAYER2_DOWN_BUTTON 4
+
+void setup() {
+  Serial.begin(9600);
+  
+  // Initialize buttons
+  pinMode(PLAYER1_UP_BUTTON, INPUT_PULLUP);
+  pinMode(PLAYER1_DOWN_BUTTON, INPUT_PULLUP);
+  pinMode(PLAYER2_UP_BUTTON, INPUT_PULLUP);
+  pinMode(PLAYER2_DOWN_BUTTON, INPUT_PULLUP);
+
+  // Initialize OLED
+  if(!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) {
+    Serial.println(F("SSD1306 allocation failed"));
+    while(1);
+  }
+  display.clearDisplay();
+  display.display();
+}
+
+void loop() {
+  display.clearDisplay();
+
+  // 1. Move ball
+  ballX += ballSpeedX;
+  ballY += ballSpeedY;
+
+  // 2. Ball collision with top/bottom
+  if(ballY <= 0 || ballY >= SCREEN_HEIGHT-1) {
+    ballSpeedY = -ballSpeedY;
+  }
+
+  // 3. Ball collision with paddles
+  if(ballX <= paddleWidth && abs(ballY - player1Y) < paddleHeight/2) {
+    ballSpeedX = -ballSpeedX;
+  }
+  if(ballX >= SCREEN_WIDTH-paddleWidth-1 && abs(ballY - player2Y) < paddleHeight/2) {
+    ballSpeedX = -ballSpeedX;
+  }
+
+  // 4. Reset ball if out of bounds
+  if(ballX < 0 || ballX > SCREEN_WIDTH) {
+    ballX = SCREEN_WIDTH/2;
+    ballY = random(10, SCREEN_HEIGHT-10); // Random respawn
+  }
+
+  // 5. Button controls for paddles
+  if(digitalRead(PLAYER1_UP_BUTTON) == LOW && player1Y > paddleHeight/2) {
+    player1Y -= 2; // Move left paddle up
+  }
+  if(digitalRead(PLAYER1_DOWN_BUTTON) == LOW && player1Y < SCREEN_HEIGHT-paddleHeight/2) {
+    player1Y += 2; // Move left paddle down
+  }
+  if(digitalRead(PLAYER2_UP_BUTTON) == LOW && player2Y > paddleHeight/2) {
+    player2Y -= 2; // Move right paddle up
+  }
+  if(digitalRead(PLAYER2_DOWN_BUTTON) == LOW && player2Y < SCREEN_HEIGHT-paddleHeight/2) {
+    player2Y += 2; // Move right paddle down
+  }
+
+  // 6. Draw everything
+  display.drawRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, SSD1306_WHITE); // Border
+  display.fillRect(0, player1Y-paddleHeight/2, paddleWidth, paddleHeight, SSD1306_WHITE); // Left paddle
+  display.fillRect(SCREEN_WIDTH-paddleWidth, player2Y-paddleHeight/2, paddleWidth, paddleHeight, SSD1306_WHITE); // Right paddle
+  display.fillCircle(ballX, ballY, 2, SSD1306_WHITE); // Ball
+
+  display.display();
+  delay(0); // Game speed
+}
+</code></pre>    
+<br>But that wasnt the end of it .I had the great idea of experimenting with Arduino Uno .Which i learnt to be not so great of a chip compared to the XIAO .As Booby listed previously .But it did work as visible in the images listed above and video down here .
+<br>⏱️ Cycle Time: Each wave repeats every 380.1 nanoseconds (that’s billionths of a second!).
+
+<br>🔁 Stability: The signal is perfectly periodic (no drift or jitter)—it’s like a metronome for electronics.
+
+<br>📏 Signal Size: Channel 1 () shows small swings of ~23.2 mV, typical for digital logic or precision circuits.
+ <video width="500" height="360" controls>
+                <source src="p4.mp4" type="video/mp4" autoplay>
+                Your browser does not support the video tag.
+                </video>
+                <br>Now for the second part of this Project I had to Use an oscilloscope to discover the time domain at which my output device is operating. Is it on a fixed clock? What's its speed? Share images and describe your findings
+                <img width="80%" src="./p5.jpg" alt="e3">
+                 <br>Here as displayed on the oscilloscope  
+               <br> <img src="osc.gif" alt="Description of the GIF">
+                  </p>  
+               
+                </div>
+            </article>
+            
+            <article class="week-documentation" style = "width: 50vw;">
+                <h3>Part 2: </h3>
+                 <p>
+                     Then for the second part of the Assignment I built a screen that displays the altitude temprature and humidity .
+                     <img width="100%" src="./p3.jpg" alt="e3">
+                     Heres how I went onto buid it .Fistly,I gathered the required materials 
+                      <br>1.Copper strips
+                      <br>2.Alligators clips
+                      <br>3.RGB LIGHT
+                      <br>4.FOAM
+                      <br>5.Others:The XIAO,Pin to Pin wires & a usb cable
+                      These were the essentials .
+                       <br>How did I begin you ask.
+                      <br>I started of by going over the pin layout of the xiao and created a rough diagram of it and its functioning on a piece of tissue.
+                      <br>My model is to work like a cushion on which pressure is applied and thhe amount of pressure apllied dictates the light displayed by the RGB .So low  pressure=Red ,Medium Pressure=Green and High Pressure = Blue .I ended up 
+                        <img width="100%" src="./p6.jpg" alt="e3">
+                    The code did take up some time but was doable.
+
+                      <pre><code class="language-arduino">
+                     
+                      </code></pre> 
+                      The working:
+                      <video width="500" height="360" controls>
+                <source src="p4.mp4" type="video/mp4" autoplay>
+                Your browser does not support the video tag.
+                </video>
+
+
+                 </p>
+                 
+                </div>
+            </article>
+            
+            
+               
+            
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2025 Aryaveer | PS70: Digital Fabrication</p>
+    </footer>
+</body>
+</html>
