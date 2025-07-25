@@ -29,174 +29,54 @@
 
         <section class="week-content" style = "justify-content: start; margin: 0;">
              <article class="week-documentation" style = "width:50vw;">
-                <h3>THE Mini Arcade game -MVP</h3>
+                <h3>Part 1:CNC </h3>
                  
                  <p>
                     This week we were tasked with creating an object using CNC Milling  
                    <br>  
+                    For this weeks assignment I teamed with felow class mates Mehemet and Case .We decided to CNC the blue mountains from Jamaica .I had been to Jamaica last year and was mesmerized by the beauty of it .I twas case who brought up the idea to do so.So we settled on the idea of doing the topography of the bue mountains.
+                    <br> <img src="./t1.jpg" alt="p1" width="300" height="400">
+                    <br> Here is the process:
+                    First of we began to modell it on fusion which took us a solid hour or two to complete.Although we picked from another source it was the sizing part on which we had to work most since our orignal output seemed to be a metre long .We used a boit of Bobbys help and a Cases skill's to shrink to an achievable size .
+                    <br>Here is where we faced our first problem as such .The que to use the CNC although not ong was vey time consuming it took one group over an hour to mill their  piece out.Whereas we accomplished ours in a few minutes .
+                    <br>At first when we began we measured the thickness of the word made sure all the machine units were in place and got started out .I was skeptica about the design since we could not see anything that the CNC was doing due to the large amounts of sawdust as visible here.                
+                   <br> <img src="./t3.jpg" alt="p1" width="300" height="400">
+                   The sawdust was eaasy to remove after we were done using the vaccum .The mountiains turned out exactly how I wanted them to be.Although the cut was a bit to curved that is complex with diffrent ayers .As visible in the images it did do quite well We were pleased with what we had done .
+                   <br> <img src="./t4.jpg" alt="p1" width="300" height="400">
+                   <br>Here is another image displaying the same.
+                   The model clearly depicts what we aimed to do it has diffrent layer showcasing and highlighting what we aimed to achieve with our project .
+                   <br>Tips:
+                   <br>1.Make sure to sandpaper to scrape off the excessive dust or residue on your modle it seemed to be very tiring thanks to the work of me and case we did it soon enough.
+                   <br>2.Dont be in a hurry to remove your object since you may risk breaking it .
+                  <br> 3.Be  Gentle with it since it may be a fragile piece.
+                  <br>Take your time with smootining the edges to get the best possible outcomes for aesthetic appeal.
+                                       <br>Here is the final look to present to you:
+                                       <br>Credits:Case and Mehemet
+                                       <br> <img src="./t2.jpg" alt="p1" width="300" height="400">
+                    I aimed to use CNC in further projects it is very useful tool to accomplish great things from.
 
-Let me tell you about the time Case, Mehemet, and I tried to recreate the Blue Mountains of Jamaica... in wood. 🌳➡️🗻 What started as a cool CAD design quickly turned into a test of human endurance.  
-
-The actual milling? Just **one endless hour** of us standing there like awkward statues, watching the machine do all the work while our muscles slowly petrified. 🧍‍♂️🧍‍♂️🧍‍♂️ You ever tried *not moving* for that long? Turns out it’s weirdly exhausting. My knees staged a full rebellion.  
-
-Then came **The Sawdustening**.  
-
-Somehow, that innocent-looking oak block birthed enough fine powder to fill a sandbox. It was **everywhere**—clinging to our clothes like desperate exes, nesting in our hair, even sneaking into places I won’t mention. 🤧 Mehemet sneezed so hard he scared the workshop supervisor. Case found a wood splinter *in his phone case* a week later.  
-
-The cleanup? A war of attrition. We swept. We vacuumed. We wiped. The more we fought, the more the sawdust seemed to multiply, like some kind of evil, sentient glitter. ✨  
-
-But when we finally stepped back? There they were—our jagged little peaks, rough but unmistakably *mountains*. And despite the sore backs, the itchy noses, and the phantom sawdust we’d still be finding in our socks tomorrow? Worth it.  
-
-Because nothing bonds teammates like shared suffering... and a mutual hatred of airborne wood particles. 🤝💀  
-
-                   
-                   <br> <img src="./p1.jpg" alt="p1" width="300" height="400"></br> 
-                    <h4>Mistakes not Make Again/Why not use Arduino UNO</h4>
-                <ul>
-                    <li>Slow</li>
-                    <li>Does not have Wifi or Bluetooth</li>
-                    <li>Will cause pain and misery for hours .</li>
-                    
-                </ul>
-                    <br>Here is how I went on about with it :
-                    <br>First I took an oled screen two buttons my trusted XIAO or ESP32C3 several pin to pin wires and began.I went through several tutorials on the curcuit diagram .Connecting the SCL and SDA were the most important as well as tiring part of my project .I got my project up and running in just 4 hours .The code was mighty exhaustive the insurmountable mountain I was unable to climb.
-                    <img src="./p2.jpg" alt="p2" width="300" height="400"></br> 
-                    <br>  Now came the one part which most of us I assume or atleast I struggle with that is the coding part .Therefor I did the hardwork so you can see the code.Here it is in its entirety:
-                     <pre><code class="language-arduino">
-  #include <Adafruit_GFX.h>
-#include <Adafruit_SSD1306.h>
-
-#define SCREEN_WIDTH 128
-#define SCREEN_HEIGHT 64
-#define OLED_RESET -1
-Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
-
-// Game elements
-int ballX = 64, ballY = 32;
-int ballSpeedX = 1, ballSpeedY = 1;
-int paddleHeight = 20;
-int paddleWidth = 3;
-int player1Y = 32, player2Y = 32; // Paddle positions
-
-// Button pins (change these to your actual pin numbers)
-#define PLAYER1_UP_BUTTON 4
-#define PLAYER1_DOWN_BUTTON 3
-#define PLAYER2_UP_BUTTON 3
-#define PLAYER2_DOWN_BUTTON 4
-
-void setup() {
-  Serial.begin(9600);
-  
-  // Initialize buttons
-  pinMode(PLAYER1_UP_BUTTON, INPUT_PULLUP);
-  pinMode(PLAYER1_DOWN_BUTTON, INPUT_PULLUP);
-  pinMode(PLAYER2_UP_BUTTON, INPUT_PULLUP);
-  pinMode(PLAYER2_DOWN_BUTTON, INPUT_PULLUP);
-
-  // Initialize OLED
-  if(!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) {
-    Serial.println(F("SSD1306 allocation failed"));
-    while(1);
-  }
-  display.clearDisplay();
-  display.display();
-}
-
-void loop() {
-  display.clearDisplay();
-
-  // 1. Move ball
-  ballX += ballSpeedX;
-  ballY += ballSpeedY;
-
-  // 2. Ball collision with top/bottom
-  if(ballY <= 0 || ballY >= SCREEN_HEIGHT-1) {
-    ballSpeedY = -ballSpeedY;
-  }
-
-  // 3. Ball collision with paddles
-  if(ballX <= paddleWidth && abs(ballY - player1Y) < paddleHeight/2) {
-    ballSpeedX = -ballSpeedX;
-  }
-  if(ballX >= SCREEN_WIDTH-paddleWidth-1 && abs(ballY - player2Y) < paddleHeight/2) {
-    ballSpeedX = -ballSpeedX;
-  }
-
-  // 4. Reset ball if out of bounds
-  if(ballX < 0 || ballX > SCREEN_WIDTH) {
-    ballX = SCREEN_WIDTH/2;
-    ballY = random(10, SCREEN_HEIGHT-10); // Random respawn
-  }
-
-  // 5. Button controls for paddles
-  if(digitalRead(PLAYER1_UP_BUTTON) == LOW && player1Y > paddleHeight/2) {
-    player1Y -= 2; // Move left paddle up
-  }
-  if(digitalRead(PLAYER1_DOWN_BUTTON) == LOW && player1Y < SCREEN_HEIGHT-paddleHeight/2) {
-    player1Y += 2; // Move left paddle down
-  }
-  if(digitalRead(PLAYER2_UP_BUTTON) == LOW && player2Y > paddleHeight/2) {
-    player2Y -= 2; // Move right paddle up
-  }
-  if(digitalRead(PLAYER2_DOWN_BUTTON) == LOW && player2Y < SCREEN_HEIGHT-paddleHeight/2) {
-    player2Y += 2; // Move right paddle down
-  }
-
-  // 6. Draw everything
-  display.drawRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, SSD1306_WHITE); // Border
-  display.fillRect(0, player1Y-paddleHeight/2, paddleWidth, paddleHeight, SSD1306_WHITE); // Left paddle
-  display.fillRect(SCREEN_WIDTH-paddleWidth, player2Y-paddleHeight/2, paddleWidth, paddleHeight, SSD1306_WHITE); // Right paddle
-  display.fillCircle(ballX, ballY, 2, SSD1306_WHITE); // Ball
-
-  display.display();
-  delay(0); // Game speed
-}
-</code></pre>    
-<br>But that wasnt the end of it .I had the great idea of experimenting with Arduino Uno .Which i learnt to be not so great of a chip compared to the XIAO .As Booby listed previously .But it did work as visible in the images listed above and video down here .
-<br>⏱️ Cycle Time: Each wave repeats every 380.1 nanoseconds (that’s billionths of a second!).
-
-<br>🔁 Stability: The signal is perfectly periodic (no drift or jitter)—it’s like a metronome for electronics.
-
-<br>📏 Signal Size: Channel 1 () shows small swings of ~23.2 mV, typical for digital logic or precision circuits.
- <video width="500" height="360" controls>
-                <source src="p4.mp4" type="video/mp4" autoplay>
-                Your browser does not support the video tag.
-                </video>
-                <br>Now for the second part of this Project I had to Use an oscilloscope to discover the time domain at which my output device is operating. Is it on a fixed clock? What's its speed? Share images and describe your findings
-                <img width="80%" src="./p5.jpg" alt="e3">
-                 <br>Here as displayed on the oscilloscope  
-               <br> <img src="osc.gif" alt="Description of the GIF">
-                  </p>  
-               
-                </div>
             </article>
             
             <article class="week-documentation" style = "width: 50vw;">
-                <h3>Part 2: </h3>
+                <h3>Part 2:Moulding and Casting </h3>
                  <p>
-                     Then for the second part of the Assignment I built a screen that displays the altitude temprature and humidity .
-                     <img width="100%" src="./p3.jpg" alt="e3">
-                     Heres how I went onto buid it .Fistly,I gathered the required materials 
-                      <br>1.Copper strips
-                      <br>2.Alligators clips
-                      <br>3.RGB LIGHT
-                      <br>4.FOAM
-                      <br>5.Others:The XIAO,Pin to Pin wires & a usb cable
-                      These were the essentials .
-                       <br>How did I begin you ask.
-                      <br>I started of by going over the pin layout of the xiao and created a rough diagram of it and its functioning on a piece of tissue.
-                      <br>My model is to work like a cushion on which pressure is applied and thhe amount of pressure apllied dictates the light displayed by the RGB .So low  pressure=Red ,Medium Pressure=Green and High Pressure = Blue .I ended up 
-                        <img width="100%" src="./p6.jpg" alt="e3">
-                    The code did take up some time but was doable.
-
-                      <pre><code class="language-arduino">
-                     
-                      </code></pre> 
-                      The working:
-                      <video width="500" height="360" controls>
-                <source src="p4.mp4" type="video/mp4" autoplay>
-                Your browser does not support the video tag.
-                </video>
+                     Then for the second part of the Assignment I mouded and casted my hand.
+                     <img width="100%" src="./t5.jpg" alt="e3">
+                     Heres how I went onto do it .Fistly,I gathered the required materials 
+                      <br>1.Algi safe. 7.5 oz
+                      <br>2.Water.7.5 oz
+                      <br>Mix the mixture well for over two minutes also stir it in a linear pattern that is to prevent any airbubblles from being created which is what happens when youdo it you norma clockwise or anticlockwise rotaion.Thanks Mehmet for reminding me .After we were done stirring it .It was time for me to dip my thumb in the mixture.
+                       <br>You are supposed to keep your hand in for 12 to 15 minutes thanks Jessica for heping out with the details.
+                      <br>Suprisingly keeping your hand in a solution can be real boring and tiresome but not when you have friends like Case who scroled reels for me for the  15 minyes taht went by in a blink of an eye .And before I knew it was time for me to get my hand off.
+                      <br>Pro tip:Remove your hand once the mixture is hard that is you no longer fell the spongy self which it once was.What was eft of it wasnt a pleasant sight to my eyes .
+                      <br>As seen here:
+                        <img width="100%" src="./t6.jpg" alt="e3">
+                    <br>Now we had to let it rest that is form its mould so that then we could remove it .So to 'ferment' we let it rest for about 35 hours which is longer than what you need to be out for.
+                    And the outcome:
+                    <br> <img src="./t7.jpg" alt="p1" width="300" height="400">
+                    <br><h2>Voilla !!!</h2>
+                    <br>A replicate of my hand which wasnt the best looking was honestly a great outcome than what I expected it to be .
+                    <br>Pssst:Be careful while removing your mould because Mehemt gave me the scare of a life time by nearly dropping it while removing it .Just be a tiny bit careful to prevent anything from going wrong .Other wise all should be fine .Hopefully this was all for this week see you next time on the Internt  Assignment .Hoping this gets a (((CHECK +++))).
 
 
                  </p>
