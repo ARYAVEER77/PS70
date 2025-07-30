@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 9| Aryaveer</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            
+            <h1>Aryaveer's Digital Fabrication Journey</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../about.html">About</a></li>
+                <li><a href="../final-project.html">Final Project</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="week-header">
+            <h2>Week 9:Networking</h2>
+            <p class="week-date"></p>
+        </section>
+
+        <section class="week-content" style = "justify-content: start; margin: 0;">
+             <article class="week-documentation" style = "width:50vw;">
+                <h3>Part 1:Network1 </h3>
+                 
+                 <p>
+                    This week we were tasked with using networking or internet for our project.
+                   <br>  
+                    For this project, I wanted to explore how I could use an API to solve a small but very real problem in my daily life. I had heard about APIs from some friends who were into computer science and had played around with ESP32 boards, often connecting them to all sorts of gadgets. I didn’t fully understand what an API did, but I was curious. The idea that you could send data or trigger actions between different platforms using just a bit of code fascinated me.
+
+I tend to forget my keys—a lot more often than I’d like to admit. It’s one of those simple things that ends up wasting time and causing stress. So I thought, what if I could build something that would remind me the moment I was about to forget them?
+
+After some searching, I came across CallMeBot, an API that lets you send WhatsApp messages with just a URL and a few parameters. It sounded perfect—easy enough to get started with, but still exciting to try out. I paired it with an ESP32 I already had and began brainstorming how I could turn that combination into a kind of “smart reminder” system. The goal was simple: if I left without my keys, the device would send me a message that made sure I didn’t keep repeating the same mistake.
+                    <br> <img src="./92.jpg" alt="p1" width="300" height="300">
+                    <h2>Project Process</h2>
+
+<p>
+  For this project, I started by choosing the right hardware: an ESP32 development board, a pushbutton switch, some jumper wires, and a breadboard. I picked the ESP32 because it has built-in Wi-Fi, which was important for connecting to the CallMeBot API over the internet without needing extra parts.
+</p>
+
+<h2>Wiring</h2>
+<p>
+  The wiring was pretty straightforward. One side of the pushbutton connected to GPIO 4 on the ESP32, and the other side went to ground through a 10kΩ pull-down resistor. This setup made sure the ESP32 could tell when the button was pressed or not. The whole circuit was powered using a USB cable plugged into a computer or a power supply. The pushbutton acted like a simple sensor to check if I had picked up my keys or not.
+</p>
+
+<h2>Challenges</h2>
+<p>
+  During the project, I ran into a few technical challenges:
+</p>
+<ul>
+  <li><strong>Wi-Fi Connection:</strong> Sometimes the ESP32 struggled to stay connected to Wi-Fi, especially when the signal was weak. I had to add some code to make it try reconnecting automatically and use LED indicators to show the connection status.</li>
+  <li><strong>API Communication:</strong> At first, sending messages through the CallMeBot API didn’t work because the URLs weren’t formatted correctly, and some required details were missing. I learned to check the HTTP responses carefully to fix these issues.</li>
+  <li><strong>Multiple Messages:</strong> Without handling the button input properly, the system would sometimes send many messages instead of just one. To fix this, I added a delay in the code to stop it from sending reminders too often.</li>
+  <li><strong>Power Issues:</strong> Using USB power from a laptop was sometimes unreliable, causing the ESP32 to reset unexpectedly. Switching to a stable external power supply solved this problem.</li>
+</ul>
+
+<h2>Code Overview</h2>
+<p>
+  I wrote the program using the Arduino IDE with libraries compatible with the ESP32. The code connects the ESP32 to Wi-Fi, monitors the pushbutton state, and sends a WhatsApp message through the CallMeBot API if the button shows the keys weren’t picked up. I also included features to prevent repeated messages and to debounce the button input for more reliable operation.
+</p>
+
+                   <br> 
+                   <pre><code class="language-arduino">
+#include <WiFi.h>
+#include <HTTPClient.h>
+#include <UrlEncode.h>
+
+// Ultrasonic Sensor Pins
+const int trigPin = 10;
+const int echoPin = 9;
+
+// Sound speed in cm/uS
+#define SOUND_SPEED 0.034
+#define MAX_DISTANCE 400  // Max reliable measurement (cm)
+#define TIMEOUT 10000     // Microseconds timeout
+
+// WiFi Credentials
+const char* ssid = "MAKERSPACE";
+const char* password = "12345678";
+
+// WhatsApp API Settings
+String phoneNumber = "+905455292528";
+String apiKey = "5664559";
+
+// Variables
+float distanceCm = 0;
+unsigned long lastSentTime = 0;
+const unsigned long messageCooldown = 60000;  // 1 minute cooldown
+
+void sendMessage(String message) {
+  if (WiFi.status() != WL_CONNECTED) {
+    Serial.println("WiFi not connected!");
+    WiFi.reconnect();
+    return;
+  }
+
+  String url = "https://api.callmebot.com/whatsapp.php?phone=" + phoneNumber + 
+               "&apikey=" + apiKey + "&text=" + urlEncode(message);
+  
+  HTTPClient http;
+  http.begin(url);
+  http.addHeader("Content-Type", "application/x-www-form-urlencoded");
+  
+  int httpResponseCode = http.POST(url);
+  
+  if (httpResponseCode == 200) {
+    Serial.println("Message sent successfully");
+    lastSentTime = millis();
+  } else {
+    Serial.print("Error sending message. HTTP Code: ");
+    Serial.println(httpResponseCode);
+  }
+  
+  http.end();
+}
+
+float getDistance() {
+  digitalWrite(trigPin, LOW);
+  delayMicroseconds(2);
+  digitalWrite(trigPin, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trigPin, LOW);
+
+  long duration = pulseIn(echoPin, HIGH, TIMEOUT);
+  
+  if (duration == 0) {
+    Serial.println("Warning: Sensor timeout - check wiring");
+    return -1;  // Error value
+  }
+  
+  float distance = duration * SOUND_SPEED / 2;
+  
+  // Validate reading
+  if (distance <= 0 || distance > MAX_DISTANCE) {
+    Serial.println("Warning: Invalid distance reading");
+    return -1;
+  }
+  
+  return distance;
+}
+
+void setup() {
+  Serial.begin(115200);
+  
+  pinMode(trigPin, OUTPUT);
+  pinMode(echoPin, INPUT);
+  
+  WiFi.begin(ssid, password);
+  Serial.print("Connecting to WiFi");
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(".");
+  }
+  Serial.println("\nConnected! IP: " + WiFi.localIP().toString());
+}
+
+void loop() {
+  distanceCm = getDistance();
+  
+  if (distanceCm > 0) {  // Only use valid readings
+    Serial.print("Distance: ");
+    Serial.print(distanceCm);
+    Serial.println(" cm");
+
+    if (distanceCm < 10 && (millis() - lastSentTime) > messageCooldown) {
+      Serial.println("Object too close! Sending alert...");
+      sendMessage("⚠️ WARNING: Object detected at " + String(distanceCm) + " cm");
+    }
+  }
+  
+  delay(1000);
+}                   </code></pre> 
+<br><img width="100%" src="./93.jpg" alt="e3">
+<img width="100%" src="./91.jpg" alt="e3">
+<h2>Possible Improvements</h2>
+
+<p>
+  Although the project was successful in sending reminders, there are several improvements that could enhance its functionality and reliability.
+</p>
+
+<ul>
+  <li><strong>More Accurate Sensing:</strong> Instead of using a simple pushbutton to simulate whether the keys were picked up, a more sophisticated sensor such as an RFID reader or a proximity sensor could be used. This would allow the device to detect the actual presence or absence of the keys more accurately.</li>
+  <li><strong>Power Efficiency:</strong> The current setup relies on USB power, which limits portability. Incorporating a rechargeable battery with power management features would make the device more practical for everyday use.</li>
+  <li><strong>Expanded Notifications:</strong> Beyond WhatsApp messages, the system could be extended to send notifications via SMS, email, or even push notifications through a dedicated mobile app, increasing flexibility and user convenience.</li>
+  <li><strong>Improved User Interface:</strong> Adding a small display or LED indicators to show the device’s status (e.g., connected to Wi-Fi, message sent) would provide clearer feedback and make troubleshooting easier.</li>
+  <li><strong>Enhanced Security:</strong> Implementing secure API authentication methods and encrypting communication could help protect user data and prevent unauthorized message sending.</li>
+  <li><strong>Automatic Reset and Recovery:</strong> The device could be programmed to automatically reset or reconnect in case of Wi-Fi disconnection or power interruptions, increasing overall robustness.</li>
+</ul>
+<h2>I personally believe API can be used for much more advanced assignments .Although easy it is diffiult to navigate </h2>
+            </article>
+            
+            <article class="week-documentation" style = "width: 50vw;">
+                <h3>Part 2:Network2 </h3>
+                 <p>
+                     <h2>Assignment: Schedule Display</h2>
+
+<h2>Idea</h2>
+<p>
+  I often find myself juggling multiple tasks and constantly switching between tabs to check my calendar. This simple annoyance sparked an idea: what if I could build a compact device that would gently remind me of my schedule, without distractions or screen fatigue?  
+</p>
+
+<p>
+  My goal was to create a small, standalone device — powered by an ESP32 — that would connect to a web-based calendar I could edit, and then show each event in a clean, readable loop on an OLED screen. Something simple but genuinely useful for day-to-day life.
+</p>
+<br> <img src="./94.jpg" alt="p1" width="300" height="300">
+
+<h2>Tutorial References</h2>
+<p>
+  I leaned heavily on a few tutorials to navigate unfamiliar territory, especially for Firebase integration and OLED handling:
+</p>
+<ol>
+  <li>Using I2C OLED with ESP32 via Arduino IDE</li>
+  <li>How to connect Firebase Realtime Database with ESP32</li>
+  <li>ESP32 Wi-Fi setup and cloud sync basics</li>
+</ol>
+
+<h2>Materials</h2>
+<ul>
+  <li>ESP32 Dev Board (Wi-Fi + Bluetooth enabled)</li>
+  <li>0.96” I2C OLED Display (128x64)</li>
+  <li>Jumper wires</li>
+  <li>Firebase Realtime Database</li>
+  <li>Arduino IDE and Visual Studio Code</li>
+</ul>
+
+<h2>Process</h2>
+
+<h3>1. Wiring the OLED Display</h3>
+<p>
+  I began by connecting the OLED to the ESP32 using the I2C interface. I wired SDA to GPIO 21 and SCL to GPIO 22. At first, I wasn’t sure which pins supported I2C on the ESP32, so I had to cross-check documentation and test with a basic I2C scanner sketch. Once I confirmed the connection, the display responded, though I had to adjust the contrast and size to make the text legible.
+</p>
+<p>
+  The power source also mattered — early on, I accidentally powered the OLED from the 3.3V pin, which led to faint text and flickering. Switching to the 5V output stabilized things. These seemingly minor details made a big difference in readability.
+</p>
+
+<h3>2. Firebase Integration</h3>
+<p>
+  Setting up Firebase was both exciting and frustrating. Creating the database and configuring access rules wasn’t too complex, but integrating it with the ESP32 was another story. I faced issues with mismatched authentication tokens, real-time syncing delays, and inconsistent updates. Sometimes the ESP32 wouldn’t receive new data unless I reset it, which turned out to be a timing problem with how I structured the loop in the code.
+</p>
+<p>
+  Eventually, I managed to build a reliable Firebase connection that syncs new events instantly. A key breakthrough was learning how to parse the nested JSON Firebase sends, so I could cleanly extract and display each event's time and description.
+</p>
+
+<h3>3. Code Logic and Behavior</h3>
+<p>
+  The code logic was straightforward in principle but took time to stabilize. I programmed the ESP32 to connect to Wi-Fi, pull data from Firebase, and cycle through a list of scheduled tasks. But syncing data while avoiding display flickers was tricky. I had to manage memory carefully and avoid pulling from Firebase too frequently to prevent overload or Wi-Fi dropouts.
+</p>
+<p>
+  After experimenting, I added a delay and an internal cache so the device could cycle through events smoothly without needing to constantly reconnect. It now fetches the data once, stores it locally, and then scrolls through the events with a small delay between them. When I update the schedule through the website, the display refreshes almost instantly.
+</p>
+
+<h3>4. Web Interface</h3>
+<p>
+  I created a simple HTML form that lets me input a date and an event title. When I click submit, the data is pushed to Firebase in real time. The JavaScript behind it was lightweight but functional. The hardest part here was ensuring that the Firebase SDK worked properly with live updates and didn’t overwrite past entries.
+</p>
+<p>
+  I also included basic validation — for instance, preventing blank submissions — to make sure the ESP32 wouldn't crash from missing data fields. It's a minimal UI, but it serves its purpose and made me appreciate the value of simple tools that just work.
+</p>
+
+<h2>Final Outcome</h2>
+<p>
+  The final build is a small but effective reminder system. It boots up, connects to Wi-Fi, pulls my upcoming events from Firebase, and shows them one after another on a bright OLED screen. It’s satisfying to see something I built from scratch helping me stay organized in a quiet, no-notification kind of way.
+</p>
+
+<h2>Improvements and Next Steps</h2>
+<p>
+  There’s plenty I would like to refine. First, I’d love to add support for editing or deleting events directly from the device using buttons or a touch interface. Right now, I can only do that from the web.
+</p>
+<p>
+  Also, integrating a real-time clock (RTC) would make the display smarter — for instance, it could skip past events or show how long remains until the next task. Another idea is to power the device using a small LiPo battery, which would let me carry it around or mount it on my desk wire-free.
+</p>
+<p>
+  Finally, while the current design works well for personal use, turning it into a more polished product would mean improving error handling, UI design, and perhaps even storing data locally for offline use. There’s still room to grow, but I’m proud of the functionality and learning packed into this little project.
+</p>
+<p>
+  This schedule input form lets me log events by selecting a date and entering a short description, such as a class, appointment, or reminder. It's a small but meaningful step toward integrating software and hardware in my daily life. Although the current form doesn’t store or process the data yet, it’s designed to eventually connect with systems like an ESP32 to trigger alerts or reminders—especially useful for someone like me who sometimes forgets important tasks.
+</p>
+
+
+
+<h2>Schedule Input</h2>
+
+<form action="#" method="post">
+  <label for="eventDate">Date:</label><br>
+  <input type="date" id="eventDate" name="eventDate" required><br><br>
+
+  <label for="eventName">Event:</label><br>
+  <input type="text" id="eventName" name="eventName" placeholder="e.g., Doctor's Appointment" required><br><br>
+
+  <input type="submit" value="Submit">
+</form>
+<br> <img src="./95.jpg" alt="p1" width="300" height="300">
+
+  <br>Hers is the code:
+</p>
+ <pre><code class="language-arduino">
+#include <Wire.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_SSD1306.h>
+#include <RTClib.h>
+
+#define SCREEN_WIDTH 128
+#define SCREEN_HEIGHT 64
+
+// I2C pins for ESP32-C3 XIAO
+#define SDA_PIN 4  // D4
+#define SCL_PIN 5  // D5
+
+Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, -1);
+RTC_DS3231 rtc;
+
+void setup() {
+  Serial.begin(115200);
+  Wire.begin(SDA_PIN, SCL_PIN);
+
+  // Initialize OLED
+  if (!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) {
+    Serial.println(F("SSD1306 allocation failed"));
+    for (;;);
+  }
+
+  // Initialize RTC
+  if (!rtc.begin()) {
+    Serial.println("Couldn't find RTC");
+    while (1);
+  }
+
+  // Uncomment once to set RTC
+  // rtc.adjust(DateTime(2025, 7, 29, 12, 0, 0));
+
+  display.clearDisplay();
+}
+
+void loop() {
+  DateTime now = rtc.now();
+  display.clearDisplay();
+  display.setTextColor(SSD1306_WHITE);
+
+  // Format date
+  int day = now.day();
+  String dayStr = String(day);
+  if (day >= 11 && day <= 13) {
+    dayStr += "th";
+  } else {
+    switch (day % 10) {
+      case 1: dayStr += "st"; break;
+      case 2: dayStr += "nd"; break;
+      case 3: dayStr += "rd"; break;
+      default: dayStr += "th"; break;
+    }
+  }
+
+  const char* months[] = {
+    "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+  };
+  String monthStr = months[now.month() - 1];
+
+  // Draw date
+  display.setTextSize(1);
+  display.setCursor(0, 0);
+  display.print(dayStr); display.print(" ");
+  display.print(monthStr); display.print(" ");
+  display.println(now.year());
+
+  // Draw time
+  display.setCursor(0, 20);
+  display.setTextSize(2);
+  if (now.hour() < 10) display.print('0');
+  display.print(now.hour()); display.print(':');
+  if (now.minute() < 10) display.print('0');
+  display.print(now.minute()); display.print(':');
+  if (now.second() < 10) display.print('0');
+  display.print(now.second());
+
+  // Draw "MEETING"
+  display.setCursor(15, 50);
+  display.setTextSize(2);
+  display.println("MEETING");
+
+  display.display();
+  delay(1000);
+}
+
+
+                </code></pre> 
+<h2>Unfornutately my phone is not working so i was unable to get a picture of the circuit i will make the neccessary changes as soon as possible.</h2>
+                 </p>
+                 
+                </div>
+            </article>
+            
+            
+               
+            
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2025 Aryaveer | PS70: Digital Fabrication</p>
+    </footer>
+</body>
+</html>
