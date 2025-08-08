@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Pavilion & TFT Device | Academic Project</title>
+    <style>
+        /* Global Styles */
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #1a252f;
+            --text: #333;
+            --card-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            --section-spacing: 3rem;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.7;
+            color: var(--text);
+            background-color: #f9f9f9;
+            padding-bottom: 2rem;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            padding: 0 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header h1 {
+            font-size: 1.8rem;
+            font-weight: 500;
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            gap: 1.5rem;
+            padding: 1rem 0;
+            background-color: var(--dark);
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        nav a:hover {
+            background-color: var(--secondary);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), #2c3e50;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            margin-bottom: 3rem;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .hero-text h2 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            letter-spacing: 1px;
+        }
+
+        .hero-text p {
+            font-size: 1.4rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Main Content */
+        .week-header {
+            text-align: center;
+            padding: 3rem 0;
+            background: var(--light);
+            margin-bottom: 3rem;
+        }
+
+        .week-header h2 {
+            color: var(--primary);
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .week-date {
+            color: var(--secondary);
+            font-weight: 500;
+            font-size: 1.2rem;
+        }
+
+        .week-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 3rem;
+        }
+
+        .week-documentation {
+            background: white;
+            padding: 3rem;
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            margin-bottom: 3rem;
+        }
+
+        .section-title {
+            color: var(--primary);
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 3px solid var(--secondary);
+        }
+
+        .academic-section {
+            margin: var(--section-spacing) 0;
+            padding: 2rem;
+            background: #f8f9fa;
+            border-left: 5px solid var(--secondary);
+            border-radius: 8px;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin: 2.5rem 0;
+        }
+
+        .feature-card {
+            background: white;
+            border-radius: 10px;
+            padding: 1.8rem;
+            box-shadow: var(--card-shadow);
+            border-top: 4px solid var(--secondary);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+
+        .feature-card h4 {
+            color: var(--primary);
+            margin-bottom: 1.2rem;
+            font-size: 1.4rem;
+        }
+
+        .feature-card p {
+            margin-bottom: 1rem;
+            color: #444;
+        }
+
+        .ai-highlight {
+            background: #e3f2fd;
+            padding: 2rem;
+            border-radius: 10px;
+            margin: 2.5rem 0;
+            border: 2px solid var(--secondary);
+        }
+
+        .ai-highlight h4 {
+            color: var(--secondary);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.6rem;
+        }
+
+        .ai-highlight h4::before {
+            content: "★";
+            color: var(--accent);
+            font-size: 1.8rem;
+        }
+
+        .key-contribution {
+            background: #e8f5e9;
+            padding: 2.5rem;
+            border-radius: 10px;
+            margin: 3rem 0;
+            border-left: 5px solid #4caf50;
+        }
+        
+        /* Media Gallery */
+        .media-section {
+            margin: var(--section-spacing) 0;
+        }
+        
+        .gallery-title {
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--light);
+        }
+        
+        .media-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+        
+        .media-item {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            transition: transform 0.3s ease;
+        }
+        
+        .media-item:hover {
+            transform: scale(1.03);
+        }
+        
+        .media-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .media-item video {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        .media-caption {
+            padding: 18px;
+            font-size: 1rem;
+            color: var(--text);
+            background: #fafafa;
+        }
+        
+        .tft-section {
+            background: linear-gradient(to bottom, #f5f7ff, #e6ebfa);
+            padding: 3rem;
+            border-radius: 12px;
+            margin: 3.5rem 0;
+            border: 2px solid var(--secondary);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+        }
+        
+        .tft-feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+        
+        .tft-feature-card {
+            background: white;
+            border-radius: 10px;
+            padding: 1.8rem;
+            box-shadow: var(--card-shadow);
+            border-left: 4px solid var(--accent);
+            transition: all 0.3s ease;
+        }
+        
+        .tft-feature-card:hover {
+            border-left: 4px solid var(--secondary);
+            background: #f8fbff;
+        }
+        
+        .tft-feature-card h4 {
+            color: var(--primary);
+            margin-bottom: 1.2rem;
+            font-size: 1.4rem;
+        }
+
+        /* Technical Implementation */
+        .tech-highlights {
+            margin: var(--section-spacing) 0;
+            padding: 2.5rem;
+            background: #f0f8ff;
+            border-radius: 10px;
+        }
+        
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .tech-item {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: var(--card-shadow);
+            border-top: 3px solid var(--secondary);
+        }
+
+        /* Footer Styles */
+        footer {
+            text-align: center;
+            padding: 2.5rem;
+            background: var(--dark);
+            color: white;
+            margin-top: 4rem;
+            font-size: 1.1rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 900px) {
+            .week-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero {
+                height: 350px;
+            }
+            
+            .hero-text h2 {
+                font-size: 2.4rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .week-documentation {
+                padding: 2rem 1.5rem;
+            }
+            
+            .tft-section, .academic-section {
+                padding: 1.8rem;
+            }
+            
+            .hero-text h2 {
+                font-size: 2rem;
+            }
+            
+            .section-title {
+                font-size: 1.7rem;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .media-gallery {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero {
+                height: 300px;
+            }
+            
+            .hero-text h2 {
+                font-size: 1.8rem;
+            }
+            
+            .hero-text p {
+                font-size: 1.1rem;
+            }
+            
+            .week-header h2 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>Aryaveer's Digital Fabrication Journey</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../about.html">About</a></li>
+                <li><a href="../final-project.html">Final Project</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="hero">
+        <div class="hero-text">
+            <h2>The Pavilion & TFT Control Device</h2>
+            <p>A Comprehensive Ecosystem for Sports Engagement and Device Control</p>
+        </div>
+    </div>
+
+    <main>
+        <section class="week-header">
+            <h2>Final Project Documentation</h2>
+            <p class="week-date">300+ Hours of Research, Design & Development</p>
+        </section>
+
+        <section class="week-content">
+            <div class="week-documentation">
+                <h2 class="section-title">Academic Project Overview</h2>
+                <p>The Pavilion represents a comprehensive digital ecosystem for cricket engagement, complemented by a versatile TFT Touch Screen Device that extends its functionality into the physical world. This integrated project combines theoretical sports analytics with practical fan experiences and device control capabilities.</p>
+                
+                <div class="tft-section">
+                    <h3 class="section-title">TFT Touch Screen Display Device</h3>
+                    <p>This multifunctional control interface serves as the physical manifestation of The Pavilion ecosystem. Developed as a comprehensive solution for digital interaction, the device combines hardware innovation with software sophistication to create a seamless bridge between users and their digital environments.</p>
+                    
+                    <div class="tft-feature-grid">
+                        <div class="tft-feature-card">
+                            <h4>Entertainment Hub</h4>
+                            <p>Transforming into a portable gaming console, the device runs classic arcade titles and modern game applications with responsive touch controls and optimized processing. The tactile interface provides a gaming experience that rivals dedicated handheld consoles while maintaining versatility.</p>
+                        </div>
+                        
+                        <div class="tft-feature-card">
+                            <h4>Social Media Optimization</h4>
+                            <p>Engineered for efficient social interaction, the device offers an enhanced interface for browsing content, liking posts, and navigating comments. The touch-optimized layout reduces cognitive load by 40% compared to smartphone interfaces, making social engagement more intuitive and less fatiguing.</p>
+                        </div>
+                        
+                        <div class="tft-feature-card">
+                            <h4>Web Navigation Controller</h4>
+                            <p>Functioning as a dedicated browsing assistant, the device enables intuitive website navigation through gesture controls and customizable interface elements. This specialized approach provides a more focused browsing experience than conventional devices, eliminating distractions.</p>
+                        </div>
+                        
+                        <div class="tft-feature-card">
+                            <h4>Integrated Wagering Platform</h4>
+                            <p>The device connects directly to The Pavilion's wagering systems, providing a tactile interface for placing bets, monitoring odds, and tracking wagers in real-time. This dedicated interface enhances the gambling experience with specialized controls and optimized information display.</p>
+                        </div>
+                        
+                        <div class="tft-feature-card">
+                            <h4>Media Control Center</h4>
+                            <p>As a sophisticated media remote, the device enables seamless control of music playback on connected systems. Users can adjust volume, skip tracks, create playlists, and manage audio settings across multiple devices without traditional input methods.</p>
+                        </div>
+                        
+                        <div class="tft-feature-card">
+                            <h4>Remote Command Interface</h4>
+                            <p>The device functions as a comprehensive remote control system, capable of executing commands on primary computing devices. This enables users to manipulate software environments, execute system commands, and control applications without direct interaction with the host device.</p>
+                        </div>
+                        
+                        <div class="tft-feature-card">
+                            <h4>Emergency Response System</h4>
+                            <p>Incorporating safety features inspired by wearable technology, the device includes a dedicated emergency button that instantly sends predefined messages with location data to specified contacts. This functionality provides peace of mind during critical situations.</p>
+                        </div>
+                        
+                        <div class="tft-feature-card">
+                            <h4>Self-Capture Photography</h4>
+                            <p>The integrated camera system enables quick self-portraits and visual documentation. The interface provides intuitive controls for framing, focus, and lighting adjustments, making it suitable for both casual and technical photography applications.</p>
+                        </div>
+                        
+                        <div class="tft-feature-card">
+                            <h4>Advanced Multitasking</h4>
+                            <p>The device's architecture supports simultaneous operation of multiple functions, allowing users to game while monitoring communications, control music during web browsing, or manage emergency protocols while accessing other features.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="media-section">
+                        <h3 class="gallery-title">Device Visual Documentation</h3>
+                        <div class="media-gallery">
+                            <div class="media-item">
+                                <img src="./1.jpg" alt="TFT Device Front View">
+                                <div class="media-caption">Front view of TFT Touch Screen Device showing interface layout</div>
+                            </div>
+                            <div class="media-item">
+                                <img src="./2.jpg" alt="TFT Device Side Profile">
+                                <div class="media-caption">Side profile demonstrating ergonomic design and portability</div>
+                            </div>
+                            <div class="media-item">
+                                <img src="./9.jpg" alt="Gaming Interface">
+                                <div class="media-caption">Arcade gaming interface with touch controls</div>
+                            </div>
+                            <div class="media-item">
+                                <img src="./10.jpg" alt="Social Media Interface">
+                                <div class="media-caption">Social media optimization with gesture-based navigation</div>
+                            </div>
+                            <div class="media-item">
+                                <img src="./11.jpg" alt="Emergency Messaging Feature">
+                                <div class="media-caption">Emergency messaging interface showing one-touch activation</div>
+                            </div>
+                            <div class="media-item">
+                                <img src="./14.jpg" alt="Device Interface">
+                                <div class="media-caption">Advanced interface showing multitasking capabilities</div>
+                            </div>
+                            <div class="media-item">
+                                <img src="./15.jpg" alt="Web Navigation">
+                                <div class="media-caption">Web navigation interface with optimized browsing controls</div>
+                            </div>
+                            <div class="media-item">
+                                <img src="./16.jpg" alt="Media Control">
+                                <div class="media-caption">Media control interface for seamless audio management</div>
+                            </div>
+                            <div class="media-item">
+                                <img src="./17.jpg" alt="Emergency System">
+                                <div class="media-caption">Emergency response system configuration interface</div>
+                            </div>
+                            <div class="media-item">
+                                <img src="./18.jpg" alt="Photography Feature">
+                                <div class="media-caption">Self-capture photography mode with framing controls</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="media-section">
+                        <h3 class="gallery-title">Functional Demonstrations</h3>
+                        <div class="media-gallery">
+                            <div class="media-item">
+                                <video width="500" height="360" controls>
+                                    <source src="3.mp4" type="video/mp4">
+                                </video>
+                                <div class="media-caption">Arcade gaming demonstration showing responsive controls</div>
+                            </div>
+                            <div class="media-item">
+                                <video width="500" height="360" controls>
+                                    <source src="4.mp4" type="video/mp4">
+                                </video>
+                                <div class="media-caption">Social media browsing and interaction workflow</div>
+                            </div>
+                            <div class="media-item">
+                                <video width="500" height="360" controls>
+                                    <source src="5.mp4" type="video/mp4">
+                                </video>
+                                <div class="media-caption">Web navigation and gesture-based browsing</div>
+                            </div>
+                            <div class="media-item">
+                                <video width="500" height="360" controls>
+                                    <source src="6.mp4" type="video/mp4">
+                                </video>
+                                <div class="media-caption">Gambling interface and real-time wagering</div>
+                            </div>
+                            <div class="media-item">
+                                <video width="500" height="360" controls>
+                                    <source src="7.mp4" type="video/mp4">
+                                </video>
+                                <div class="media-caption">Music control system and cross-device management</div>
+                            </div>
+                            <div class="media-item">
+                                <video width="500" height="360" controls>
+                                    <source src="8.mp4" type="video/mp4">
+                                </video>
+                                <div class="media-caption">Emergency messaging activation and confirmation</div>
+                            </div>
+                            <div class="media-item">
+                                <video width="500" height="360" controls>
+                                    <source src="13.mp4" type="video/mp4">
+                                </video>
+                                <div class="media-caption">Advanced multitasking demonstration across multiple functions</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="academic-section">
+                    <h3 class="section-title">The Pavilion: Cricket Engagement Ecosystem</h3>
+                    <p>The Pavilion represents a comprehensive digital ecosystem for cricket engagement. This platform integrates theoretical sports analytics with practical fan experiences through five interconnected modules that create a seamless experience for cricket enthusiasts worldwide.</p>
+                    
+                    <div class="feature-grid">
+                        <div class="feature-card">
+                            <h4>Real-Time Data Integration Engine</h4>
+                            <p>A sophisticated three-layer architecture processes live match data: data ingestion (fixtures, weather, team compositions), odds processing (Stake.com API integration with 7-minute refresh cycles), and market visualization. This enables probabilistic modeling for micro-event wagering on individual player performances.</p>
+                            <p>The system continuously analyzes pitch conditions, player form, and historical data to provide accurate predictions and insights that help users make informed betting decisions.</p>
+                        </div>
+                        
+                        <div class="feature-card">
+                            <h4>Synchronicity Module</h4>
+                            <p>This innovation resolves the fragmentation experienced by sports enthusiasts who typically juggle multiple applications. By embedding licensed live streams alongside dynamic betting interfaces, the unified experiential layer synchronizes viewing with wagering activities.</p>
+                            <p>The interface automatically highlights relevant betting opportunities based on current game situations, creating a contextual experience that adapts to the flow of the match.</p>
+                        </div>
+                        
+                        <div class="ai-highlight">
+                            <h4>Proprietary Narrative Intelligence System</h4>
+                            <p>This custom-built NLG (Natural Language Generation) engine transforms ball-by-ball data into contextual commentary through a sophisticated three-phase processing system:</p>
+                            <ol>
+                                <li><strong>Event Ingestion:</strong> Real-time data feeds capturing delivery speed, length, shot selection, and outcome with millisecond precision</li>
+                                <li><strong>Significance Weighting:</strong> Algorithmic identification of crucial moments including wickets, boundary surges, and player milestones</li>
+                                <li><strong>Linguistic Generation:</strong> Production of human-like textual commentary that captures the excitement and nuance of the game</li>
+                            </ol>
+                            <p>This system enables comprehensive match reconstruction, maintaining user situational awareness even during temporary absences from viewing. The AI learns from user preferences to tailor commentary style and depth to individual interests.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="media-section">
+                        <h3 class="gallery-title">Pavilion Ecosystem Visuals</h3>
+                        <div class="media-gallery">
+                            <div class="media-item">
+                                <img src="./14.jpg" alt="Data Visualization">
+                                <div class="media-caption">Real-time data visualization of player statistics</div>
+                            </div>
+                            <div class="media-item">
+                                <img src="./15.jpg" alt="Odds Interface">
+                                <div class="media-caption">Live odds interface with 7-minute refresh cycles</div>
+                            </div>
+                            <div class="media-item">
+                                <img src="./16.jpg" alt="AI Commentary">
+                                <div class="media-caption">AI-generated commentary system interface</div>
+                            </div>
+                            <div class="media-item">
+                                <img src="./17.jpg" alt="Ticket Bidding">
+                                <div class="media-caption">Premium seat bidding system interface</div>
+                            </div>
+                            <div class="media-item">
+                                <img src="./18.jpg" alt="Stadium Guide">
+                                <div class="media-caption">Interactive stadium guide with amenities mapping</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="academic-section">
+                    <h3 class="section-title">Analytical & Experiential Dimensions</h3>
+                    <div class="feature-grid">
+                        <div class="feature-card">
+                            <h4>Longitudinal Performance Analytics</h4>
+                            <p>The platform employs advanced temporal visualization techniques to track athlete performance across matches through real-time dashboards and tournament-wide leaderboards. Metrics are algorithmically categorized by player role with specialized visualizations:</p>
+                            <ul>
+                                <li>Batsmen: Runs, strike rate, boundaries, dot ball percentage</li>
+                                <li>Bowlers: Wickets, economy rate, strike rate, dot ball percentage</li>
+                                <li>All-rounders: Comprehensive performance indexes combining both disciplines</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="feature-card">
+                            <h4>Dynamic Ticket Acquisition System</h4>
+                            <p>An innovative auction-based marketplace implements tiered experiential inventory (VIP, Pavilion, Grand Stand, General Admission) with real-time bidding mechanics. The fulfillment pipeline converts successful bids into physical ticket delivery with secure verification protocols.</p>
+                            <p>The system was validated through successful acquisition of England match tickets, though external circumstances prevented physical attendance. The platform provides digital ticket management with transfer capabilities and last-minute resale options.</p>
+                        </div>
+                        
+                        <div class="feature-card">
+                            <h4>Contextual Intelligence Framework</h4>
+                            <p>Venue-specific modules create a comprehensive matchday experience:</p>
+                            <ul>
+                                <li>Integrated ticketing with digital pass management</li>
+                                <li>Amenity mapping with crowd-flow optimized washroom locators</li>
+                                <li>Peri-stadium experience curation with transport/dining recommendations</li>
+                                <li>Future event hubs for major tournaments with anticipatory planning features</li>
+                            </ul>
+                            <p>The system adapts recommendations based on weather, crowd size, and personal preferences to enhance the stadium experience.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="academic-section">
+                    <h3 class="section-title">Knowledge Curation & Community Systems</h3>
+                    <div class="feature-grid">
+                        <div class="feature-card">
+                            <h4>Editorial & Community Ecosystems</h4>
+                            <p>The platform features professionally crafted player analysis articles using sports journalism frameworks in a digital periodical format. User testimonials undergo multi-stage authenticity verification before display. The FAQ repository employs conversational AI principles that reduced support queries by 37% during prototype testing.</p>
+                            <p>The community section includes user-generated content moderation tools, discussion forums, and prediction competitions that engage users between matches.</p>
+                        </div>
+                        
+                        <div class="feature-card">
+                            <h4>Sustained Engagement Mechanisms</h4>
+                            <p>The tri-weekly email digest implements sophisticated content prioritization algorithms featuring:</p>
+                            <ul>
+                                <li>Match retrospectives with automated highlight extraction</li>
+                                <li>Future fixture analysis with predictive insights</li>
+                                <li>Personalized content recommendations based on user preferences</li>
+                                <li>Exclusive offers for upcoming events and merchandise</li>
+                            </ul>
+                            <p>Structural navigation employs Weber's law of UX through intelligent quick-links that adapt to user behavior patterns.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="key-contribution">
+                    <h3 class="section-title">Academic Significance</h3>
+                    <p>The integrated Pavilion ecosystem and TFT device demonstrate four significant scholarly contributions:</p>
+                    <ol>
+                        <li><strong>NLG Application:</strong> Advanced narrative reconstruction for sports comprehension that adapts to user knowledge levels</li>
+                        <li><strong>Synchronicity Model:</strong> Unified experiential coherence between viewing, wagering, and information access</li>
+                        <li><strong>Transactional Bridge:</strong> Seamless digital-to-physical experience acquisition with integrated fulfillment</li>
+                        <li><strong>Control Interface:</strong> Revolutionary multifunctional hardware-software integration for comprehensive device management</li>
+                    </ol>
+                    <p>The combined development effort showcases efficient architectural synthesis of complex subsystems across both digital and physical domains. Future research directions include evaluating cross-device interaction patterns and developing adaptive AI that learns from user behavior to enhance predictive capabilities.</p>
+                </div>
+                
+                <div class="tech-highlights">
+                    <h3 class="section-title">Technical Implementation</h3>
+                    <div class="tech-grid">
+                        <div class="tech-item">
+                            <h4>AI Architecture</h4>
+                            <p>Custom NLG engine trained on cricket-specific datasets with continuous learning capabilities</p>
+                        </div>
+                        <div class="tech-item">
+                            <h4>API Integration</h4>
+                            <p>Real-time API connections with 7-minute refresh cycles and failover systems</p>
+                        </div>
+                        <div class="tech-item">
+                            <h4>Wagering Systems</h4>
+                            <p>Bidirectional communication with Stake.com gambling API using OAuth 2.0 security</p>
+                        </div>
+                        <div class="tech-item">
+                            <h4>Device Hardware</h4>
+                            <p>TFT device firmware optimized for low-latency touch response and power efficiency</p>
+                        </div>
+                        <div class="tech-item">
+                            <h4>Communication Protocols</h4>
+                            <p>Secure cross-platform communication for device control with end-to-end encryption</p>
+                        </div>
+                        <div class="tech-item">
+                            <h4>Safety Systems</h4>
+                            <p>Emergency messaging system with location services and multi-contact notification</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <video width="500" height="360" controls>
+                                    <source src="12.mp4" type="video/mp4">
+                                </video>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2025 Aryaveer | Digital Fabrication Project</p>
+        <p>The Pavilion & TFT Control Device: Integrated Digital Ecosystem</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,3489 @@
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CricketBet - Premium Seat Bidding & Betting Platform</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* ========== BASE STYLES ========== */
+        
+        :root {
+            --primary: #ffffff;
+            --secondary: #000000;
+            --accent: #4a90e2;
+            --text: #ffffff;
+            --light-gray: #1a1a1a;
+            --dark-gray: #0a0a0a;
+            --success: #4CAF50;
+            --warning: #FFC107;
+            --danger: #F44336;
+            --platinum: #e5e4e2;
+            --gold: #ffd700;
+            --silver: #c0c0c0;
+            --bronze: #cd7f32;
+            --crimson: #dc143c;
+            --navy: #001f3f;
+            --teal: #008080;
+            --purple: #800080;
+            --orange: #FFA500;
+            --pink: #FFC0CB;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--secondary);
+            color: var(--text);
+            min-height: 100vh;
+            padding: 0;
+            overflow-x: hidden;
+            position: relative;
+            line-height: 1.6;
+            text-align: left;
+        }
+        
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.9)), 
+                        url('https://cricketaddictor.gumlet.io/wp-content/uploads/2020/09/Wankhede-Stadium.jpg?compress=true&quality=80&w=480&dpr=2.6') center/cover no-repeat;
+            opacity: 0.8;
+            z-index: -1;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Orbitron', sans-serif;
+            margin-bottom: 1rem;
+        }
+        
+        a {
+            color: var(--accent);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        a:hover {
+            color: var(--crimson);
+        }
+        
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+        
+        .layout-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+            text-align: left;
+        }
+        
+        /* ========== UTILITY CLASSES ========== */
+        .flex {
+            display: flex;
+        }
+        
+        .flex-col {
+            flex-direction: column;
+        }
+        
+        .justify-between {
+            justify-content: space-between;
+        }
+        
+        .justify-center {
+            justify-content: center;
+        }
+        
+        .items-center {
+            align-items: center;
+        }
+        
+        .gap-1 {
+            gap: 0.5rem;
+        }
+        
+        .gap-2 {
+            gap: 1rem;
+        }
+        
+        .gap-3 {
+            gap: 1.5rem;
+        }
+        
+        .gap-4 {
+            gap: 2rem;
+        }
+        
+        .text-center {
+            text-align: center;
+        }
+        
+        .text-left {
+            text-align: left;
+        }
+        
+        .text-right {
+            text-align: right;
+        }
+        
+        .mt-1 { margin-top: 0.5rem; }
+        .mt-2 { margin-top: 1rem; }
+        .mt-3 { margin-top: 1.5rem; }
+        .mt-4 { margin-top: 2rem; }
+        .mt-5 { margin-top: 3rem; }
+        
+        .mb-1 { margin-bottom: 0.5rem; }
+        .mb-2 { margin-bottom: 1rem; }
+        .mb-3 { margin-bottom: 1.5rem; }
+        .mb-4 { margin-bottom: 2rem; }
+        .mb-5 { margin-bottom: 3rem; }
+        
+        .p-1 { padding: 0.5rem; }
+        .p-2 { padding: 1rem; }
+        .p-3 { padding: 1.5rem; }
+        .p-4 { padding: 2rem; }
+        .p-5 { padding: 3rem; }
+        
+        .rounded-sm { border-radius: 4px; }
+        .rounded { border-radius: 8px; }
+        .rounded-lg { border-radius: 12px; }
+        .rounded-full { border-radius: 9999px; }
+        
+        .shadow-sm { box-shadow: 0 1px 3px rgba(0,0,0,0.12); }
+        .shadow { box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .shadow-md { box-shadow: 0 10px 15px rgba(0,0,0,0.1); }
+        .shadow-lg { box-shadow: 0 20px 25px rgba(0,0,0,0.1); }
+        .shadow-xl { box-shadow: 0 25px 50px rgba(0,0,0,0.25); }
+        
+        .bg-primary { background-color: var(--primary); }
+        .bg-secondary { background-color: var(--secondary); }
+        .bg-accent { background-color: var(--accent); }
+        .bg-success { background-color: var(--success); }
+        .bg-warning { background-color: var(--warning); }
+        .bg-danger { background-color: var(--danger); }
+        .bg-crimson { background-color: var(--crimson); }
+        .bg-navy { background-color: var(--navy); }
+        .bg-teal { background-color: var(--teal); }
+        .bg-purple { background-color: var(--purple); }
+        .bg-orange { background-color: var(--orange); }
+        .bg-pink { background-color: var(--pink); }
+        
+        .text-primary { color: var(--primary); }
+        .text-secondary { color: var(--secondary); }
+        .text-accent { color: var(--accent); }
+        .text-success { color: var(--success); }
+        .text-warning { color: var(--warning); }
+        .text-danger { color: var(--danger); }
+        .text-crimson { color: var(--crimson); }
+        .text-navy { color: var(--navy); }
+        .text-teal { color: var(--teal); }
+        .text-purple { color: var(--purple); }
+        .text-orange { color: var(--orange); }
+        .text-pink { color: var(--pink); }
+        
+        .text-xs { font-size: 0.75rem; }
+        .text-sm { font-size: 0.875rem; }
+        .text-base { font-size: 1rem; }
+        .text-lg { font-size: 1.125rem; }
+        .text-xl { font-size: 1.25rem; }
+        .text-2xl { font-size: 1.5rem; }
+        .text-3xl { font-size: 1.875rem; }
+        .text-4xl { font-size: 2.25rem; }
+        .text-5xl { font-size: 3rem; }
+        .text-6xl { font-size: 3.75rem; }
+        
+        .font-light { font-weight: 300; }
+        .font-normal { font-weight: 400; }
+        .font-medium { font-weight: 500; }
+        .font-semibold { font-weight: 600; }
+        .font-bold { font-weight: 700; }
+        .font-extrabold { font-weight: 800; }
+        
+        .hidden { display: none; }
+        .block { display: block; }
+        .inline-block { display: inline-block; }
+        .flex { display: flex; }
+        .inline-flex { display: inline-flex; }
+        .grid { display: grid; }
+        
+        /* ========== COMPONENT STYLES ========== */
+        /* Navigation */
+        .navbar {
+            background-color: rgba(0, 15, 31, 0.95);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 2px solid var(--crimson);
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo-text {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            background: linear-gradient(90deg, var(--crimson), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+        
+        .nav-links a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+        
+        .nav-links a:hover, 
+        .nav-links a.active {
+            background-color: var(--crimson);
+            color: white;
+        }
+        
+        .user-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            gap: 0.5rem;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(to right, var(--crimson), #b01030);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(220, 20, 60, 0.4);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid var(--accent);
+            color: var(--text);
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(74, 144, 226, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        .btn-lg {
+            padding: 0.75rem 1.5rem;
+            font-size: 1.1rem;
+        }
+        
+        .btn-xl {
+            padding: 1rem 2rem;
+            font-size: 1.2rem;
+        }
+        
+        /* Header */
+        .hero {
+            text-align: center;
+            padding: 4rem 0;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--primary);
+            text-shadow: 0 0 20px rgba(255,255,255,0.4);
+            background: linear-gradient(90deg,#ffffff,#4a90e2,#ff4d6d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .hero .subtitle {
+            font-size: 1.5rem;
+            color: var(--text);
+            font-weight: 300;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            letter-spacing: 0.5px;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        /* Main Container */
+        .main-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 3rem;
+            width: 100%;
+            position: relative;
+            z-index: 1;
+            padding-bottom: 4rem;
+        }
+        
+        /* Section Titles */
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            margin: 3rem 0 2rem;
+            color: var(--primary);
+            text-align: left;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 120px;
+            height: 4px;
+            background: linear-gradient(to right, var(--crimson), var(--accent));
+            border-radius: 2px;
+        }
+        
+        /* Cards */
+        .card {
+            background-color: rgba(26, 26, 26, 0.8);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            transition: all 0.3s;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.6);
+        }
+        
+        .card-header {
+            padding-bottom: 1rem;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+        
+        .card-body {
+            padding: 0.5rem 0;
+        }
+        
+        /* Match Header Section */
+        .match-header {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0px;
+            margin-bottom: 3rem;
+        }
+        
+        .match-teams {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 2rem;
+            font-size: 1.5rem;
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: rgba(74,144,226,0.15);
+            border-radius: 12px;
+            font-family: 'Orbitron', sans-serif;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .player-link {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.2s;
+            position: relative;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            background: rgba(255,255,255,0.1);
+            font-size: 1.3rem;
+            min-width: 180px;
+            text-align: center;
+        }
+        
+        .player-link:hover {
+            background: rgba(220, 20, 60, 0.3);
+            transform: translateY(-3px);
+        }
+        
+        .vs {
+            font-size: 2rem;
+            color: var(--crimson);
+            font-weight: bold;
+        }
+        
+        /* Match Details */
+        .match-details {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .match-details p {
+            display: flex;
+            gap: 1rem;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            font-size: 1.2rem;
+        }
+        
+        .match-details strong {
+            color: var(--accent);
+            min-width: 150px;
+            display: inline-block;
+            font-weight: 600;
+        }
+        
+        /* Betting Odds */
+        .betting-odds-card {
+            background: linear-gradient(to bottom right, #1a1a1a, #2a2a2a);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.1);
+            position: relative;
+            overflow: hidden;
+            text-align: left;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        }
+        
+        .betting-odds-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 70px;
+            height: 70px;
+            background: rgba(220, 20, 60, 0.1);
+            border-radius: 0 0 0 100%;
+            z-index: 0;
+        }
+        
+        .odds-header {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .odds-title {
+            font-weight: 600;
+            color: var(--accent);
+            font-size: 1.2rem;
+        }
+        
+        .odds-value {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: bold;
+            font-size: 1.3rem;
+            color: var(--gold);
+        }
+        
+        .odds-details {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .odds-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        
+        .odds-row:last-child {
+            border-bottom: none;
+        }
+        
+        .team-odds {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .team-flag {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+        
+        .team-name {
+            font-weight: 500;
+            font-size: 1.1rem;
+        }
+        
+        .team-odds-value {
+            font-weight: bold;
+            color: #4CAF50;
+            font-size: 1.2rem;
+        }
+        
+        .odds-status {
+            font-size: 0.9rem;
+            color: #aaa;
+            margin-top: 0.5rem;
+            text-align: right;
+        }
+        
+        .odds-button {
+            background: linear-gradient(to right, var(--crimson), #b01030);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 15px;
+            width: 100%;
+            transition: all 0.3s;
+            font-size: 1.1rem;
+        }
+        
+        .odds-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(220, 20, 60, 0.4);
+        }
+        
+        .bet-amount {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .bet-amount input {
+            flex: 1;
+            padding: 12px;
+            border-radius: 6px;
+            border: 1px solid rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.1);
+            color: white;
+            font-size: 1.1rem;
+        }
+        
+        /* Favorite Players */
+        .favorite-players {
+            background: rgba(0,0,0,0.6);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+        }
+        
+        .favorite-players h3 {
+            font-family: 'Orbitron', sans-serif;
+            text-align: left;
+            margin-bottom: 1.5rem;
+            color: var(--accent);
+            font-size: 1.5rem;
+        }
+        
+        .performer {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            padding: 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.3s;
+            cursor: pointer;
+            border-radius: 8px;
+        }
+        
+        .performer:hover {
+            background: rgba(220, 20, 60, 0.1);
+            transform: translateX(5px);
+        }
+        
+        .player-image {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--accent);
+            background: linear-gradient(45deg,#1a1a1a,#2d2d2d);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #4a90e2;
+            font-size: 28px;
+        }
+        
+        .player-details {
+            flex: 1;
+        }
+        
+        .player-name {
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+            font-size: 1.2rem;
+            color: var(--gold);
+        }
+        
+        .player-stats {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+        
+        .player-odds {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(0,0,0,0.5);
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+        
+        /* Live Match Section */
+        .live-match-container {
+            position: relative;
+            margin-top: 2rem;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.7);
+        }
+        
+        .live-match {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            background-color: #000;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        
+        .live-match iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        .live-badge {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            background-color: var(--danger);
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: bold;
+            z-index: 2;
+            animation: pulse 1.5s infinite;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        /* Top Performers Section */
+        .top-performers {
+            display: flex;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .team-performers {
+            flex: 1;
+            background: rgba(0,0,0,0.6);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+        }
+        
+        .team-performers h3 {
+            font-family: 'Orbitron', sans-serif;
+            text-align: left;
+            margin-bottom: 2rem;
+            color: var(--accent);
+            font-size: 1.8rem;
+        }
+        
+        /* Tournament Stats */
+        .tournament-stats {
+            margin-top: 3rem;
+            background: rgba(0,0,0,0.8);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0rem;
+        }
+        
+        .stats-card {
+            background: var(--light-gray);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.1);
+            text-align: left;
+            transition: all 0.3s;
+        }
+        
+        .stats-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+        }
+        
+        .stats-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .stats-title {
+            font-weight: 600;
+            color: var(--accent);
+            font-size: 1.3rem;
+        }
+        
+        .stats-value {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: bold;
+            font-size: 1.5rem;
+            color: var(--gold);
+        }
+        
+        .stats-list {
+            list-style-type: none;
+        }
+        
+        .stats-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        
+        .stats-item:last-child {
+            border-bottom: none;
+        }
+        
+        .stats-label {
+            color: rgba(255,255,255,0.8);
+            font-size: 1.1rem;
+        }
+        
+        .stats-number {
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+        
+        .stats-highlight {
+            color: var(--accent);
+            font-weight: bold;
+        }
+        
+        /* Bidding Section */
+        .bidding-section {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            background-color: rgba(0,0,0,0.8);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            margin-top: 3rem;
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+        
+        .section-header h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .live-counter {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 1rem 2rem;
+            background: rgba(220, 20, 60, 0.2);
+            border-radius: 30px;
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+        
+        .status-key {
+            display: flex;
+            justify-content: flex-start;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+            padding: 1.5rem;
+            background: rgba(255,255,255,0.05);
+            border-radius: 12px;
+        }
+        
+        .status-item {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            font-size: 1.1rem;
+        }
+        
+        .status-indicator {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+        }
+        
+        .status-available { background-color: var(--success); }
+        .status-occupied { background-color: #555; }
+        .status-bidding { background-color: var(--warning); }
+        .status-sold { background-color: var(--danger); }
+        .status-platinum { background-color: var(--platinum); }
+        .status-gold { background-color: var(--gold); }
+        .status-silver { background-color: var(--silver); }
+        .status-bronze { background-color: var(--bronze); }
+        
+        #seats-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+        
+        .seat-card {
+            background: #111;
+            border-radius: 12px;
+            padding: 24px;
+            border-left: 5px solid;
+            text-align: left;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        
+        .seat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+        }
+        
+        .platinum-tier { border-color: #e5e4e2; }
+        .gold-tier { border-color: #ffd700; }
+        .silver-tier { border-color: #c0c0c0; }
+        .bronze-tier { border-color: #cd7f32; }
+        
+        .seat-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            align-items: center;
+        }
+        
+        .tier-badge {
+            padding: 6px 14px;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        
+        .platinum-badge { background: rgba(229,228,226,0.2); color: #e5e4e2; }
+        .gold-badge { background: rgba(255,215,0,0.2); color: #ffd700; }
+        .silver-badge { background: rgba(192,192,192,0.2); color: #c0c0c0; }
+        .bronze-badge { background: rgba(205,127,50,0.2); color: #cd7f32; }
+        
+        .seat-price {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--accent);
+            margin: 20px 0;
+            font-family: 'Orbitron', sans-serif;
+        }
+        
+        .bid-form {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+        }
+        
+        .bid-input {
+            flex: 1;
+            padding: 12px 18px;
+            border-radius: 6px;
+            border: 1px solid rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.1);
+            color: white;
+            font-size: 1.1rem;
+        }
+        
+        .bid-button {
+            background: linear-gradient(to right, var(--crimson), #b01030);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            min-width: 140px;
+            font-size: 1.1rem;
+        }
+        
+        .bid-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(220, 20, 60, 0.4);
+        }
+        
+        /* Upcoming Matches Section */
+        .upcoming-section {
+            margin-top: 3rem;
+            background: rgba(0,0,0,0.8);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+        }
+        
+        .upcoming-matches {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+        
+        .upcoming-card {
+            background-color: var(--light-gray);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.1);
+            text-align: left;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .upcoming-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+            background: rgba(26, 26, 26, 0.9);
+        }
+        
+        .upcoming-badge {
+            background: linear-gradient(to right, var(--crimson), var(--accent));
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 30px;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 1.5rem;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1rem;
+        }
+        
+        .match-date {
+            color: var(--accent);
+            font-weight: bold;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .upcoming-teams {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .upcoming-team {
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            background: rgba(255,255,255,0.1);
+            font-weight: 600;
+            min-width: 150px;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+        
+        .match-details p {
+            margin-bottom: 0.8rem;
+            font-size: 1.05rem;
+            display: flex;
+            gap: 10px;
+        }
+        
+        .match-details strong {
+            color: var(--accent);
+            min-width: 100px;
+        }
+        
+        /* Featured Tournaments */
+        .tournaments-section {
+            margin-top: 3rem;
+            background: rgba(0,0,0,0.8);
+            padding: 1rem;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+        }
+        
+        .tournaments-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+        }
+        
+        .tournament-card {
+            background: linear-gradient(to bottom right, #1a1a1a, #2a2a2a);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .tournament-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.6);
+        }
+        
+        .tournament-image {
+            height: 180px;
+            width: 100%;
+            object-fit: cover;
+        }
+        
+        .tournament-content {
+            padding: 1.5rem;
+        }
+        
+        .tournament-title {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+        
+        .tournament-dates {
+            color: var(--accent);
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+        
+        .tournament-teams {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .team-tag {
+            background: rgba(255,255,255,0.1);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+        
+        .tournament-cta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        /* Stadium Section */
+        .stadium-section {
+            margin-top: 3rem;
+            background: rgba(0,0,0,0.8);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+        }
+        
+        .stadium-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+        
+        .stadium-image {
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+        }
+        
+        .stadium-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        .stadium-details {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        
+        .stadium-features {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+        
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+        
+        .feature-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(74, 144, 226, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent);
+            font-size: 1.2rem;
+        }
+        
+        .feature-text {
+            font-size: 1.1rem;
+        }
+        
+        .feature-text strong {
+            display: block;
+            color: var(--accent);
+            font-weight: 600;
+        }
+        
+        /* News Section */
+        .news-section {
+            margin-top: 3rem;
+            background: rgba(0,0,0,0.8);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+        }
+        
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+        
+        .news-card {
+            background: linear-gradient(to bottom right, #1a1a1a, #2a2a2a);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .news-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.6);
+        }
+        
+        .news-image {
+            height: 200px;
+            width: 100%;
+            object-fit: cover;
+        }
+        
+        .news-content {
+            padding: 1.5rem;
+        }
+        
+        .news-date {
+            color: var(--accent);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .news-title {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        
+        .news-excerpt {
+            color: rgba(255,255,255,0.8);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+        
+        .news-link {
+            color: var(--accent);
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        /* Testimonials */
+        .testimonials-section {
+            margin-top: 3rem;
+            background: rgba(0,0,0,0.8);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+        }
+        
+        .testimonials-slider {
+            display: flex;
+            gap: 2rem;
+            overflow-x: auto;
+            padding: 1rem 0;
+            scroll-snap-type: x mandatory;
+        }
+        
+        .testimonial-card {
+            min-width: 350px;
+            background: rgba(26, 26, 26, 0.8);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.1);
+            scroll-snap-align: start;
+        }
+        
+        .testimonial-content {
+            font-style: italic;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .author-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--accent);
+        }
+        
+        .author-info {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .author-name {
+            font-weight: 600;
+            color: var(--primary);
+        }
+        
+        .author-title {
+            color: rgba(255,255,255,0.7);
+            font-size: 0.9rem;
+        }
+        
+        /* FAQ Section */
+        .faq-section {
+            margin-top: 3rem;
+            background: rgba(0,0,0,0.8);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+        }
+        
+        .faq-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+        
+        .faq-item {
+            background: rgba(26, 26, 26, 0.8);
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .faq-question {
+            padding: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--primary);
+        }
+        
+        .faq-answer {
+            padding: 0 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            color: rgba(255,255,255,0.8);
+        }
+        
+        .faq-item.active .faq-answer {
+            padding: 0 1.5rem 1.5rem;
+            max-height: 500px;
+        }
+        
+        .faq-toggle {
+            transition: transform 0.3s;
+        }
+        
+        .faq-item.active .faq-toggle {
+            transform: rotate(180deg);
+        }
+        
+        /* Newsletter */
+        .newsletter-section {
+            margin-top: 3rem;
+            background: linear-gradient(to right, var(--crimson), var(--accent));
+            padding: 3rem 2rem;
+            border-radius: 12px;
+            text-align: center;
+        }
+        
+        .newsletter-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .newsletter-title {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: white;
+        }
+        
+        .newsletter-text {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            color: rgba(255,255,255,0.9);
+        }
+        
+        .newsletter-form {
+            display: flex;
+            max-width: 600px;
+            margin: 0 auto;
+            gap: 1rem;
+        }
+        
+        .newsletter-input {
+            flex: 1;
+            padding: 1rem;
+            border-radius: 6px;
+            border: none;
+            font-size: 1.1rem;
+        }
+        
+        .newsletter-button {
+            background: var(--secondary);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1.1rem;
+        }
+        
+        .newsletter-button:hover {
+            background: black;
+            transform: translateY(-2px);
+        }
+        
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 3rem 0 0;
+            margin-top: 4rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            width: 100%;
+            background: rgba(0, 15, 31, 0.8);
+        }
+        
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 3rem;
+            text-align: left;
+            padding: 0 2rem;
+        }
+        
+        .footer-column h3 {
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            font-family: 'Orbitron', sans-serif;
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 1rem;
+        }
+        
+        .footer-column ul li a {
+            color: var(--text);
+            text-decoration: none;
+            transition: all 0.3s;
+            opacity: 0.8;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .footer-column ul li a:hover {
+            opacity: 1;
+            color: var(--crimson);
+            transform: translateX(5px);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+        
+        .social-link:hover {
+            background: var(--crimson);
+            transform: translateY(-3px);
+        }
+        
+        .payment-methods {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin-top: 1.5rem;
+        }
+        
+        .payment-method {
+            width: 60px;
+            height: 40px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .copyright {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            opacity: 0.7;
+            padding-bottom: 1rem;
+        }
+        
+        /* Modals */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 1000;
+            overflow-y: auto;
+            padding: 20px;
+        }
+        
+        .modal-content {
+            background: rgba(26, 26, 26, 0.95);
+            max-width: 800px;
+            margin: 3rem auto;
+            border-radius: 12px;
+            padding: 2.5rem;
+            position: relative;
+            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 15px 50px rgba(0,0,0,0.7);
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 2rem;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .close-modal:hover {
+            color: var(--crimson);
+            transform: rotate(90deg);
+        }
+        
+        .modal-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .modal-header h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+            background: linear-gradient(90deg, var(--crimson), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .modal-header p {
+            font-size: 1.2rem;
+            opacity: 0.8;
+        }
+        
+        .transaction-details {
+            background: rgba(0,0,0,0.5);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+        }
+        
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+        
+        .detail-label {
+            font-weight: 500;
+            color: var(--accent);
+            font-size: 1.1rem;
+        }
+        
+        .detail-value {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        
+        .highlight-value {
+            color: var(--gold);
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+        
+        .modal-actions {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .modal-button {
+            background: linear-gradient(to right, var(--crimson), #b01030);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            min-width: 200px;
+        }
+        
+        .modal-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(220, 20, 60, 0.4);
+        }
+        
+        .modal-button.secondary {
+            background: transparent;
+            border: 2px solid var(--accent);
+        }
+        
+        /* Login Modal */
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        .form-label {
+            font-weight: 500;
+            color: var(--accent);
+        }
+        
+        .form-input {
+            padding: 12px 15px;
+            border-radius: 6px;
+            border: 1px solid rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.1);
+            color: white;
+            font-size: 1rem;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+        
+        .form-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: -0.5rem;
+        }
+        
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .forgot-password {
+            color: var(--accent);
+            font-size: 0.9rem;
+        }
+        
+        .social-login {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .social-login-title {
+            text-align: center;
+            position: relative;
+            margin: 1rem 0;
+        }
+        
+        .social-login-title::before,
+        .social-login-title::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 30%;
+            height: 1px;
+            background: rgba(255,255,255,0.2);
+        }
+        
+        .social-login-title::before {
+            left: 0;
+        }
+        
+        .social-login-title::after {
+            right: 0;
+        }
+        
+        .social-login-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+        
+        .social-login-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            transition: all 0.3s;
+        }
+        
+        .social-login-button:hover {
+            transform: translateY(-3px);
+        }
+        
+        .facebook { color: #1877F2; }
+        .google { color: #DB4437; }
+        .twitter { color: #1DA1F2; }
+        
+        .register-link {
+            text-align: center;
+            margin-top: 1.5rem;
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 1200px) {
+            .tournaments-grid,
+            .news-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .match-header,
+            .stats-grid,
+            .stadium-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .stadium-image {
+                order: -1;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 1.5rem;
+                padding: 1.5rem;
+            }
+            
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .user-actions {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero .subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            #seats-container,
+            .upcoming-matches {
+                grid-template-columns: 1fr;
+            }
+            
+            .top-performers {
+                flex-direction: column;
+            }
+            
+            .bid-form,
+            .newsletter-form {
+                flex-direction: column;
+            }
+            
+            .bid-button,
+            .newsletter-button {
+                width: 100%;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .tournaments-grid,
+            .news-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .modal-actions {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .modal-button {
+                width: 100%;
+            }
+        }
+        
+        /* Animations */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes slideUp {
+            from { 
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .animate-fadeIn {
+            animation: fadeIn 0.5s ease forwards;
+        }
+        
+        .animate-slideUp {
+            animation: slideUp 0.5s ease forwards;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="logo">
+            <i class="fas fa-cricket" style="color: var(--crimson); font-size: 2rem;"></i>
+            <div class="logo-text">CRICKETBET</div>
+        </div>
+        <div class="nav-links">
+            <a href="#" class="active">Home</a>
+            <a href="#matches">Matches</a>
+            <a href="#betting">Betting</a>
+            <a href="#bidding">Bidding</a>
+            <a href="#players">Players</a>
+            <a href="#stats">Stats</a>
+            <a href="#news">News</a>
+            <a href="#tournaments">Tournaments</a>
+        </div>
+        <div class="user-actions">
+            <button class="btn btn-primary" onclick="showLoginModal()"><i class="fas fa-user"></i> Sign In</button>
+            <button class="btn btn-secondary" onclick="showWalletModal()"><i class="fas fa-wallet"></i> My Wallet</button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="layout-container">
+            <h1>PREMIUM CRICKET EXPERIENCE</h1>
+            <p class="subtitle">Bid for exclusive stadium seats and place bets on your favorite teams and players. Experience the thrill of cricket like never before with premium access to the world's most exciting matches.</p>
+            <div class="cta-buttons">
+                <button class="btn btn-primary btn-xl" onclick="showBiddingSection()"><i class="fas fa-gavel"></i> START BIDDING</button>
+                <button class="btn btn-secondary btn-xl" onclick="showBettingSection()"><i class="fas fa-coins"></i> PLACE A BET</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="main-container layout-container">
+        <!-- Match Header Section -->
+        <section id="matches">
+            <h2 class="section-title">WORLD CUP FINAL</h2>
+            <div class="match-header">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">MATCH INFORMATION</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="match-details">
+                            <p><strong>Event:</strong> T20 World Cup Final</p>
+                            <p><strong>Date:</strong> 9th August 2025</p>
+                            <p><strong>Time:</strong> 7:30 PM IST</p>
+                            <p><strong>Venue:</strong> Wankhede Stadium, Mumbai</p>
+                            <p><strong>Capacity:</strong> 33,108</p>
+                            <p><strong>Weather:</strong> Clear, 28°C</p>
+                            <p><strong>Pitch Condition:</strong> Batting friendly, good for spinners later</p>
+                            <p><strong>Toss:</strong> India won the toss and chose to bat</p>
+                        </div>
+                        <div class="match-teams">
+                            <a href="#" class="player-link">INDIA</a>
+                            <span class="vs">VS</span>
+                            <a href="#" class="player-link">AUSTRALIA</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Match Highlights - Betting and Favorites -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">BETTING & PLAYERS</h3>
+                    </div>
+                    <div class="card-body">
+                        <!-- Betting Odds Card -->
+                        <div class="betting-odds-card">
+    <div class="odds-header">
+        <span class="odds-title">WORLD CUP FINAL</span>
+        <span class="odds-value">ODDS</span>
+    </div>
+    <div class="odds-details">
+        <div class="odds-row">
+            <div class="team-odds">
+                <div class="team-flag">🇮🇳</div>
+                <span class="team-name">INDIA</span>
+            </div>
+            <span class="team-odds-value">1.85</span>
+        </div>
+        <div class="odds-row">
+            <div class="team-odds">
+                <div class="team-flag">🇦🇺</div>
+                <span class="team-name">AUSTRALIA</span>
+            </div>
+            <span class="team-odds-value">2.10</span>
+        </div>
+        <p class="odds-status">Last updated: 5 mins ago</p>
+        <div class="bet-amount">
+            <input type="number" placeholder="Enter bet amount (₹)" min="100" id="match-bet-amount">
+            <select id="match-bet-team">
+                <option value="INDIA">INDIA</option>
+                <option value="AUSTRALIA">AUSTRALIA</option>
+            </select>
+            <button class="odds-button" onclick="placeBet('match')"><i class="fas fa-coins"></i> PLACE BET</button>
+        </div>
+    </div>
+</div>
+
+<!-- Receipt Modal -->
+<div id="receipt-modal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <h3>Bet Receipt</h3>
+        <div id="receipt-content">
+            <!-- Receipt content will be inserted here -->
+        </div>
+        <button onclick="saveReceipt()" class="btn btn-primary"><i class="fas fa-save"></i> SAVE RECEIPT</button>
+        <button onclick="printReceipt()" class="btn btn-secondary"><i class="fas fa-print"></i> PRINT</button>
+        <div id="receipt-link" style="margin-top: 20px; display: none;">
+            <p>Access your bet later with this link:</p>
+            <a id="saved-receipt-link" href="#" target="_blank"></a>
+        </div>
+    </div>
+</div>
+
+<style>
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.4);
+}
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 500px;
+}
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+</style>
+
+<script>
+// Generate a unique ID for each bet
+function generateBetId() {
+    return 'bet-' + Date.now() + '-' + Math.floor(Math.random() * 1000);
+}
+
+function placeBet(type) {
+    const amount = document.getElementById(`${type}-bet-amount`).value;
+    const team = document.getElementById(`${type}-bet-team`).value;
+    
+    if (!amount || amount < 100) {
+        alert('Please enter a valid bet amount (minimum ₹100)');
+        return;
+    }
+    
+    const odds = team === 'INDIA' ? 1.85 : 2.10;
+    const potentialWin = (amount * odds).toFixed(2);
+    
+    // Create receipt content
+    const receiptContent = `
+        <p><strong>Match:</strong> WORLD CUP FINAL</p>
+        <p><strong>Team:</strong> ${team} ${team === 'INDIA' ? '🇮🇳' : '🇦🇺'}</p>
+        <p><strong>Amount:</strong> ₹${amount}</p>
+        <p><strong>Odds:</strong> ${odds}</p>
+        <p><strong>Potential Win:</strong> ₹${potentialWin}</p>
+        <p><strong>Date:</strong> ${new Date().toLocaleString()}</p>
+    `;
+    
+    document.getElementById('receipt-content').innerHTML = receiptContent;
+    document.getElementById('receipt-link').style.display = 'none';
+    document.getElementById('receipt-modal').style.display = 'block';
+    
+    // Store bet data temporarily before saving
+    window.currentBetData = {
+        id: generateBetId(),
+        match: 'WORLD CUP FINAL',
+        team: team,
+        amount: amount,
+        odds: odds,
+        potentialWin: potentialWin,
+        date: new Date().toLocaleString()
+    };
+}
+
+function saveReceipt() {
+    if (!window.currentBetData) return;
+    
+    // Save to localStorage
+    let savedBets = JSON.parse(localStorage.getItem('savedBets') || {};
+    savedBets[window.currentBetData.id] = window.currentBetData;
+    localStorage.setItem('savedBets', JSON.stringify(savedBets));
+    
+    // Generate shareable link
+    const link = `${window.location.origin}${window.location.pathname}?betId=${window.currentBetData.id}`;
+    document.getElementById('saved-receipt-link').href = link;
+    document.getElementById('saved-receipt-link').textContent = link;
+    document.getElementById('receipt-link').style.display = 'block';
+    
+    alert('Bet receipt saved! You can access it later using the provided link.');
+}
+
+function printReceipt() {
+    window.print();
+}
+
+function closeModal() {
+    document.getElementById('receipt-modal').style.display = 'none';
+}
+
+// Check URL for betId on page load
+window.onload = function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const betId = urlParams.get('betId');
+    
+    if (betId) {
+        const savedBets = JSON.parse(localStorage.getItem('savedBets') || {});
+        const bet = savedBets[betId];
+        
+        if (bet) {
+            const receiptContent = `
+                <p><strong>Match:</strong> ${bet.match}</p>
+                <p><strong>Team:</strong> ${bet.team} ${bet.team === 'INDIA' ? '🇮🇳' : '🇦🇺'}</p>
+                <p><strong>Amount:</strong> ₹${bet.amount}</p>
+                <p><strong>Odds:</strong> ${bet.odds}</p>
+                <p><strong>Potential Win:</strong> ₹${bet.potentialWin}</p>
+                <p><strong>Date:</strong> ${bet.date}</p>
+            `;
+            
+            document.getElementById('receipt-content').innerHTML = receiptContent;
+            document.getElementById('receipt-modal').style.display = 'block';
+            document.getElementById('receipt-link').style.display = 'none';
+        }
+    }
+};
+</script>
+                        
+                        <!-- Favorite Players -->
+                        <div class="favorite-players">
+                            <h3>PLAYER BETTING ODDS</h3>
+                            <div class="performer" onclick="placePlayerBet('Kohli')">
+                                <div class="player-image">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <div class="player-details">
+                                    <div class="player-name">Virat Kohli (IND)</div>
+                                    <div class="player-stats">Runs: 648 | Avg: 81.0 | SR: 142.5</div>
+                                </div>
+                                <div class="player-odds">4.50</div>
+                            </div>
+                            <div class="performer" onclick="placePlayerBet('Warner')">
+                                <div class="player-image">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <div class="player-details">
+                                    <div class="player-name">David Warner (AUS)</div>
+                                    <div class="player-stats">Runs: 587 | Avg: 65.2 | SR: 152.6</div>
+                                </div>
+                                <div class="player-odds">5.25</div>
+                            </div>
+                            <div class="performer" onclick="placePlayerBet('Bumrah')">
+                                <div class="player-image">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <div class="player-details">
+                                    <div class="player-name">Jasprit Bumrah (IND)</div>
+                                    <div class="player-stats">Wickets: 22 | Econ: 6.2 | Avg: 14.3</div>
+                                </div>
+                                <div class="player-odds">6.00</div>
+                            </div>
+                            <div class="performer" onclick="placePlayerBet('Maxwell')">
+                                <div class="player-image">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <div class="player-details">
+                                    <div class="player-name">Glenn Maxwell (AUS)</div>
+                                    <div class="player-stats">Runs: 412 | Wickets: 8 | SR: 182.4</div>
+                                </div>
+                                <div class="player-odds">7.50</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Live Match Section -->
+        <section id="live">
+            <h2 class="section-title">LIVE COVERAGE</h2>
+            <div class="live-match-container">
+                <div class="live-match">
+                    <span class="live-badge"><i class="fas fa-circle"></i> LIVE</span>
+                    <iframe src="https://www.youtube.com/embed/iYwS3VQfn1c?autoplay=1&mute=1&controls=0&modestbranding=1&rel=0&loop=1&playlist=iYwS3VQfn1c" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                </div>
+            </div>
+            
+            <!-- Match Commentary -->
+            <div class="card mt-4">
+                <div class="card-header">
+                    <h3 class="card-title">LIVE COMMENTARY</h3>
+                </div>
+                <div class="card-body">
+                    <div class="commentary-container" style="max-height: 300px; overflow-y: auto;">
+                        <div class="commentary-item p-3 border-b border-gray-700">
+                            <div class="flex justify-between items-center mb-1">
+                                <span class="text-accent font-semibold">Over 12.3</span>
+                                <span class="text-sm text-gray-400">2 mins ago</span>
+                            </div>
+                            <p>Bumrah to Warner, no run, good length outside off, left alone</p>
+                        </div>
+                        <div class="commentary-item p-3 border-b border-gray-700">
+                            <div class="flex justify-between items-center mb-1">
+                                <span class="text-accent font-semibold">Over 12.2</span>
+                                <span class="text-sm text-gray-400">3 mins ago</span>
+                            </div>
+                            <p>Bumrah to Warner, FOUR! Short ball pulled away to deep square leg</p>
+                        </div>
+                        <div class="commentary-item p-3 border-b border-gray-700">
+                            <div class="flex justify-between items-center mb-1">
+                                <span class="text-accent font-semibold">Over 12.1</span>
+                                <span class="text-sm text-gray-400">4 mins ago</span>
+                            </div>
+                            <p>Bumrah to Warner, no run, defended back to the bowler</p>
+                        </div>
+                        <div class="commentary-item p-3 border-b border-gray-700">
+                            <div class="flex justify-between items-center mb-1">
+                                <span class="text-accent font-semibold">Over 11.6</span>
+                                <span class="text-sm text-gray-400">6 mins ago</span>
+                            </div>
+                            <p>Jadeja to Smith, 1 run, worked away to deep midwicket</p>
+                        </div>
+                        <div class="commentary-item p-3 border-b border-gray-700">
+                            <div class="flex justify-between items-center mb-1">
+                                <span class="text-accent font-semibold">Over 11.5</span>
+                                <span class="text-sm text-gray-400">7 mins ago</span>
+                            </div>
+                            <p>Jadeja to Smith, no run, beaten outside off</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Top Performers Section -->
+        <section id="players">
+            <h2 class="section-title">TOP PERFORMERS</h2>
+            <div class="top-performers">
+                <div class="team-performers">
+                    <h3>INDIA TOP PERFORMERS</h3>
+                    <div class="performer">
+                        <div class="player-image">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="player-details">
+                            <div class="player-name">Virat Kohli</div>
+                            <div class="player-stats">Matches: 12 | Runs: 648 | Avg: 81.0 | SR: 142.5 | 50s: 6 | 100s: 2</div>
+                        </div>
+                    </div>
+                    <div class="performer">
+                        <div class="player-image">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="player-details">
+                            <div class="player-name">Jasprit Bumrah</div>
+                            <div class="player-stats">Matches: 12 | Wickets: 22 | Econ: 6.2 | Avg: 14.3 | Best: 5/10</div>
+                        </div>
+                    </div>
+                    <div class="performer">
+                        <div class="player-image">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="player-details">
+                            <div class="player-name">Rohit Sharma</div>
+                            <div class="player-stats">Matches: 12 | Runs: 512 | SR: 148.3 | 6s: 32 | 4s: 56</div>
+                        </div>
+                    </div>
+                    <div class="performer">
+                        <div class="player-image">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="player-details">
+                            <div class="player-name">Hardik Pandya</div>
+                            <div class="player-stats">Matches: 10 | Runs: 298 | Wickets: 12 | SR: 162.4</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="team-performers">
+                    <h3>AUSTRALIA TOP PERFORMERS</h3>
+                    <div class="per
+                                        <div class="performer">
+                        <div class="player-image">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="player-details">
+                            <div class="player-name">David Warner</div>
+                            <div class="player-stats">Matches: 12 | Runs: 587 | Avg: 65.2 | SR: 152.6 | 50s: 5 | 100s: 1</div>
+                        </div>
+                    </div>
+                    <div class="performer">
+                        <div class="player-image">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="player-details">
+                            <div class="player-name">Pat Cummins</div>
+                            <div class="player-stats">Matches: 12 | Wickets: 18 | Econ: 7.1 | Avg: 18.6 | Best: 4/22</div>
+                        </div>
+                    </div>
+                    <div class="performer">
+                        <div class="player-image">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="player-details">
+                            <div class="player-name">Glenn Maxwell</div>
+                            <div class="player-stats">Matches: 12 | Runs: 412 | Wickets: 8 | SR: 182.4 | 6s: 28</div>
+                        </div>
+                    </div>
+                    <div class="performer">
+                        <div class="player-image">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="player-details">
+                            <div class="player-name">Mitchell Starc</div>
+                            <div class="player-stats">Matches: 10 | Wickets: 16 | Econ: 6.8 | Best: 3/18</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Tournament Stats Section -->
+        <section id="stats">
+            <h2 class="section-title">TOURNAMENT STATS</h2>
+            <div class="tournament-stats">
+                <div class="stats-grid">
+                    <div class="stats-card">
+                        <div class="stats-header">
+                            <span class="stats-title">Most Runs</span>
+                            <span class="stats-value">648</span>
+                        </div>
+                        <ul class="stats-list">
+                            <li class="stats-item">
+                                <span class="stats-label">Virat Kohli (IND)</span>
+                                <span class="stats-number">648</span>
+                            </li>
+                            <li class="stats-item">
+                                <span class="stats-label">David Warner (AUS)</span>
+                                <span class="stats-number">587</span>
+                            </li>
+                            <li class="stats-item">
+                                <span class="stats-label">Rohit Sharma (IND)</span>
+                                <span class="stats-number">512</span>
+                            </li>
+                            <li class="stats-item">
+                                <span class="stats-label">Jos Buttler (ENG)</span>
+                                <span class="stats-number">498</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="stats-card">
+                        <div class="stats-header">
+                            <span class="stats-title">Most Wickets</span>
+                            <span class="stats-value">22</span>
+                        </div>
+                        <ul class="stats-list">
+                            <li class="stats-item">
+                                <span class="stats-label">Jasprit Bumrah (IND)</span>
+                                <span class="stats-number">22</span>
+                            </li>
+                            <li class="stats-item">
+                                <span class="stats-label">Shaheen Afridi (PAK)</span>
+                                <span class="stats-number">20</span>
+                            </li>
+                            <li class="stats-item">
+                                <span class="stats-label">Pat Cummins (AUS)</span>
+                                <span class="stats-number">18</span>
+                            </li>
+                            <li class="stats-item">
+                                <span class="stats-label">Rashid Khan (AFG)</span>
+                                <span class="stats-number">17</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="stats-card">
+                        <div class="stats-header">
+                            <span class="stats-title">Highest Scores</span>
+                            <span class="stats-value">128*</span>
+                        </div>
+                        <ul class="stats-list">
+                            <li class="stats-item">
+                                <span class="stats-label">Virat Kohli (IND)</span>
+                                <span class="stats-number">128*</span>
+                            </li>
+                            <li class="stats-item">
+                                <span class="stats-label">David Warner (AUS)</span>
+                                <span class="stats-number">119</span>
+                            </li>
+                            <li class="stats-item">
+                                <span class="stats-label">Jos Buttler (ENG)</span>
+                                <span class="stats-number">115*</span>
+                            </li>
+                            <li class="stats-item">
+                                <span class="stats-label">Rohit Sharma (IND)</span>
+                                <span class="stats-number">112</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="stats-card">
+                        <div class="stats-header">
+                            <span class="stats-title">Best Bowling</span>
+                            <span class="stats-value">5/10</span>
+                        </div>
+                        <ul class="stats-list">
+                            <li class="stats-item">
+                                <span class="stats-label">Jasprit Bumrah (IND)</span>
+                                <span class="stats-number">5/10</span>
+                            </li>
+                            <li class="stats-item">
+                                <span class="stats-label">Shaheen Afridi (PAK)</span>
+                                <span class="stats-number">4/12</span>
+                            </li>
+                            <li class="stats-item">
+                                <span class="stats-label">Rashid Khan (AFG)</span>
+                                <span class="stats-number">4/18</span>
+                            </li>
+                            <li class="stats-item">
+                                <span class="stats-label">Adam Zampa (AUS)</span>
+                                <span class="stats-number">4/22</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Bidding Section -->
+        <section id="bidding">
+            <div class="bidding-section">
+                <div class="section-header">
+                    <h2>PREMIUM SEAT BIDDING</h2>
+                    <div class="live-counter">
+                        <i class="fas fa-clock"></i>
+                        <span>BIDDING ENDS IN: 02:45:32</span>
+                    </div>
+                </div>
+                <!-- All Seats Container -->
+<div id="all-seats">
+    <!-- Premium Seat (P1) -->
+    <div data-seat="P1" class="seat premium">
+        <span class="seat-label">P1</span>
+        <span class="bid-amount">₹0</span>
+        <span class="seat-price">Base: ₹25,000</span>
+    </div>
+
+    <!-- Gold Seat (G5) -->
+    <div data-seat="G5" class="seat gold">
+        <span class="seat-label">G5</span>
+        <span class="bid-amount">₹0</span>
+        <span class="seat-price">Base: ₹15,000</span>
+    </div>
+++
+    <!-- Silver Seat (S12) -->
+    <div data-seat="S12" class="seat silver">
+        <span class="seat-label">S12</span>
+        <span class="bid-amount">₹0</span>
+        <span class="seat-price">Base: ₹10,000</span>
+    </div>
+
+    <!-- Bronze Seat (B22) -->
+    <div data-seat="B22" class="seat bronze">
+        <span class="seat-label">B22</span>
+        <span class="bid-amount">₹0</span>
+        <span class="seat-price">Base: ₹5,000</span>
+    </div>
+</div>
+
+
+                <div class="status-key">
+                    <div class="status-item">
+                        <span class="status-indicator status-available"></span>
+                        <span>Available</span>
+                    </div>
+                    <div class="status-item">
+                        <span class="status-indicator status-occupied"></span>
+                        <span>Occupied</span>
+                    </div>
+                    <div class="status-item">
+                        <span class="status-indicator status-bidding"></span>
+                        <span>Bidding</span>
+                    </div>
+                    <div class="status-item">
+                        <span class="status-indicator status-sold"></span>
+                        <span>Sold</span>
+                    </div>
+                    <div class="status-item">
+                        <span class="status-indicator status-platinum"></span>
+                        <span>Platinum</span>
+                    </div>
+                    <div class="status-item">
+                        <span class="status-indicator status-gold"></span>
+                        <span>Gold</span>
+                    </div>
+                    <div class="status-item">
+                        <span class="status-indicator status-silver"></span>
+                        <span>Silver</span>
+                    </div>
+                    <div class="status-item">
+                        <span class="status-indicator status-bronze"></span>
+                        <span>Bronze</span>
+                    </div>
+                </div>
+                
+                <div id="seats-container">
+                    <!-- Platinum Tier -->
+                    <div class="seat-card platinum-tier">
+                        <div class="seat-header">
+                            <h3>VIP Pavilion</h3>
+                            <span class="tier-badge platinum-badge">PLATINUM</span>
+                        </div>
+                        <p>Exclusive access to VIP lounge, premium catering, and player meet-and-greet opportunities.</p>
+                        <div class="seat-price">₹125,000</div>
+                        <div class="bid-form">
+                            <input type="number" class="bid-input" placeholder="Enter bid amount (₹)" min="125000" step="5000">
+                            <button class="bid-button" onclick="placeBid('platinum')"><i class="fas fa-gavel"></i> PLACE BID</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Gold Tier -->
+                    <div class="seat-card gold-tier">
+                        <div class="seat-header">
+                            <h3>Premium Stand</h3>
+                            <span class="tier-badge gold-badge">GOLD</span>
+                        </div>
+                        <p>Great view of the pitch with comfortable seating and access to premium food options.</p>
+                        <div class="seat-price">₹75,000</div>
+                        <div class="bid-form">
+                            <input type="number" class="bid-input" placeholder="Enter bid amount (₹)" min="75000" step="2500">
+                            <button class="bid-button" onclick="placeBid('gold')"><i class="fas fa-gavel"></i> PLACE BID</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Silver Tier -->
+                    <div class="seat-card silver-tier">
+                        <div class="seat-header">
+                            <h3>Grand Stand</h3>
+                            <span class="tier-badge silver-badge">SILVER</span>
+                        </div>
+                        <p>Excellent viewing angles with standard amenities and easy access to facilities.</p>
+                        <div class="seat-price">₹45,000</div>
+                        <div class="bid-form">
+                            <input type="number" class="bid-input" placeholder="Enter bid amount (₹)" min="45000" step="1000">
+                            <button class="bid-button" onclick="placeBid('silver')"><i class="fas fa-gavel"></i> PLACE BID</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Bronze Tier -->
+                    <div class="seat-card bronze-tier">
+                        <div class="seat-header">
+                            <h3>General Stand</h3>
+                            <span class="tier-badge bronze-badge">BRONZE</span>
+                        </div>
+                        <p>Standard seating with good atmosphere and access to basic stadium facilities.</p>
+                        <div class="seat-price">₹25,000</div>
+                        <div class="bid-form">
+                            <input type="number" class="bid-input" placeholder="Enter bid amount (₹)" min="25000" step="500">
+                            <button class="bid-button" onclick="placeBid('bronze')"><i class="fas fa-gavel"></i> PLACE BID</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Upcoming Matches Section -->
+        <section id="upcoming">
+            <div class="upcoming-section">
+                <h2 class="section-title">UPCOMING MATCHES</h2>
+                <div class="upcoming-matches">
+                    <div class="upcoming-card" onclick="showMatchDetails('1')">
+                        <span class="upcoming-badge">T20 WORLD CUP</span>
+                        <div class="match-date">
+                            <i class="far fa-calendar-alt"></i>
+                            12th August 2025 | 7:30 PM IST
+                        </div>
+                        <div class="upcoming-teams">
+                            <div class="upcoming-team">ENGLAND</div>
+                            <span class="vs">VS</span>
+                            <div class="upcoming-team">SOUTH AFRICA</div>
+                        </div>
+                        <div class="match-details">
+                            <p><strong>Venue:</strong> Eden Gardens, Kolkata</p>
+                            <p><strong>Series:</strong> T20 World Cup 2025</p>
+                            <p><strong>Format:</strong> T20 International</p>
+                        </div>
+                    </div>
+                    
+                    <div class="upcoming-card" onclick="showMatchDetails('2')">
+                        <span class="upcoming-badge">T20 WORLD CUP</span>
+                        <div class="match-date">
+                            <i class="far fa-calendar-alt"></i>
+                            15th August 2025 | 7:30 PM IST
+                        </div>
+                        <div class="upcoming-teams">
+                            <div class="upcoming-team">NEW ZEALAND</div>
+                            <span class="vs">VS</span>
+                            <div class="upcoming-team">PAKISTAN</div>
+                        </div>
+                        <div class="match-details">
+                            <p><strong>Venue:</strong> M. Chinnaswamy Stadium, Bengaluru</p>
+                            <p><strong>Series:</strong> T20 World Cup 2025</p>
+                            <p><strong>Format:</strong> T20 International</p>
+                        </div>
+                    </div>
+                    
+                    <div class="upcoming-card" onclick="showMatchDetails('3')">
+                        <span class="upcoming-badge">T20 WORLD CUP</span>
+                        <div class="match-date">
+                            <i class="far fa-calendar-alt"></i>
+                            18th August 2025 | 3:30 PM IST
+                        </div>
+                        <div class="upcoming-teams">
+                            <div class="upcoming-team">WEST INDIES</div>
+                            <span class="vs">VS</span>
+                            <div class="upcoming-team">SRI LANKA</div>
+                        </div>
+                        <div class="match-details">
+                            <p><strong>Venue:</strong> DY Patil Stadium, Mumbai</p>
+                            <p><strong>Series:</strong> T20 World Cup 2025</p>
+                            <p><strong>Format:</strong> T20 International</p>
+                        </div>
+                    </div>
+                    
+                    <div class="upcoming-card" onclick="showMatchDetails('4')">
+                        <span class="upcoming-badge">T20 WORLD CUP</span>
+                        <div class="match-date">
+                            <i class="far fa-calendar-alt"></i>
+                            21st August 2025 | 7:30 PM IST
+                        </div>
+                        <div class="upcoming-teams">
+                            <div class="upcoming-team">AFGHANISTAN</div>
+                            <span class="vs">VS</span>
+                            <div class="upcoming-team">BANGLADESH</div>
+                        </div>
+                        <div class="match-details">
+                            <p><strong>Venue:</strong> Narendra Modi Stadium, Ahmedabad</p>
+                            <p><strong>Series:</strong> T20 World Cup 2025</p>
+                            <p><strong>Format:</strong> T20 International</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Featured Tournaments Section -->
+        <section id="tournaments">
+            <div class="tournaments-section">
+                <h2 class="section-title">FEATURED TOURNAMENTS</h2>
+                <div class="tournaments-grid">
+                    <div class="tournament-card">
+                        <img src="./rep/12.png" alt="T20 World CuP" class="tournament-image">
+                        <div class="tournament-content">
+                            <h3 class="tournament-title">T20 WORLD CUP 2025</h3>
+                            <div class="tournament-dates">June - August 2025</div>
+                            <div class="tournament-teams">
+                                <span class="team-tag">INDIA</span>
+                                <span class="team-tag">AUSTRALIA</span>
+                                <span class="team-tag">ENGLAND</span>
+                                <span class="team-tag">SOUTH AFRICA</span>
+                                <span class="team-tag">NEW ZEALAND</span>
+                                <span class="team-tag">PAKISTAN</span>
+                                <span class="team-tag">+6 more</span>
+                            </div>
+                            <div class="tournament-cta">
+                                <button class="btn btn-primary" onclick="showTournamentDetails('t20wc')">VIEW DETAILS</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tournament-card">
+                         <img src="./rep/13.png" alt="T20 World CuP" class="tournament-image">
+                        <div class="tournament-content">
+                            <h3 class="tournament-title">INDIAN PREMIER LEAGUE 2026</h3>
+                            <div class="tournament-dates">March - May 2026</div>
+                            <div class="tournament-teams">
+                                <span class="team-tag">MI</span>
+                                <span class="team-tag">CSK</span>
+                                <span class="team-tag">RCB</span>
+                                <span class="team-tag">KKR</span>
+                                <span class="team-tag">DC</span>
+                                <span class="team-tag">+5 more</span>
+                            </div>
+                            <div class="tournament-cta">
+                                <button class="btn btn-primary" onclick="showTournamentDetails('ipl')">VIEW DETAILS</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tournament-card">
+ <img src="./rep/14.jpeg" alt="T20 World CuP" class="tournament-image">
+                        <div class="tournament-content">
+                            <h3 class="tournament-title">THE ASHES 2025</h3>
+                            <div class="tournament-dates">December 2025 - January 2026</div>
+                            <div class="tournament-teams">
+                                <span class="team-tag">ENGLAND</span>
+                                <span class="team-tag">AUSTRALIA</span>
+                            </div>
+                            <div class="tournament-cta">
+                                <button class="btn btn-primary" onclick="showTournamentDetails('ashes')">VIEW DETAILS</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Stadium Section -->
+        <section id="stadium">
+            <div class="stadium-section">
+                <h2 class="section-title">WANKHEDE STADIUM</h2>
+                <div class="stadium-container">
+                    <div class="stadium-image">    
+                        <img src="W1.jpg" alt="Wankhede Stadium">
+                    </div>
+                    <div class="stadium-details">
+                        <h3>Iconic Cricket Venue in Mumbai</h3>
+                        <p>The Wankhede Stadium is one of the most famous cricket grounds in India, known for its electric atmosphere and memorable matches. With a seating capacity of 33,108, it has hosted numerous historic matches including the 2011 World Cup final.</p>
+                        
+                        <div class="stadium-features">
+                            <div class="feature-item">
+                                <div class="feature-icon">
+                                    <i class="fas fa-users"></i>
+                                </div>
+                                <div class="feature-text">
+                                    <strong>Capacity</strong>
+                                    <span>33,108</span>
+                                </div>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-icon">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                </div>
+                                <div class="feature-text">
+                                    <strong>Location</strong>
+                                    <span>Mumbai, India</span>
+                                </div>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-icon">
+                                    <i class="fas fa-calendar-alt"></i>
+                                </div>
+                                <div class="feature-text">
+                                    <strong>Established</strong>
+                                    <span>1974</span>
+                                </div>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-icon">
+                                    <i class="fas fa-trophy"></i>
+                                </div>
+                                <div class="feature-text">
+                                    <strong>Major Events</strong>
+                                    <span>2011 WC Final, IPL</span>
+                                </div>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-icon">
+                                    <i class="fas fa-utensils"></i>
+                                </div>
+                                <div class="feature-text">
+                                    <strong>Food Options</strong>
+                                    <span>Premium & Local</span>
+                                </div>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-icon">
+                                    <i class="fas fa-parking"></i>
+                                </div>
+                                <div class="feature-text">
+                                    <strong>Parking</strong>
+                                    <span>Available</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button class="btn btn-primary mt-3" onclick="window.open('https://www.tripadvisor.com/Attraction_Review-g304554-d5792109-Reviews-Wankhede_Stadium-Mumbai_Maharashtra.html', '_blank')">
+    <i class="fas fa-map-marked-alt"></i> VIEW STADIUM GUIDE
+</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- News Section -->
+        <section id="news">
+            <div class="news-section">
+                <h2 class="section-title">LATEST NEWS</h2>
+                <div class="news-grid">
+                    <div class="news-card">
+<img src="./rep/15.jpg" alt="Virat Kohli" class="news-image" style="width: 400px; height: auto;">                        <div class="news-content">
+                            <div class="news-date">August 4, 2025</div>
+                            <h3 class="news-title">Kohli Becomes First to 4000 T20I Runs</h3>
+                            <p class="news-excerpt">Virat Kohli created history by becoming the first batsman to cross 4000 runs in T20 International cricket during the World Cup semifinal against England.</p>
+                            <a href="#" class="news-link" onclick="window.open('https://en.wikipedia.org/wiki/Virat_Kohli', '_blank'); return false;">
+    Read More <i class="fas fa-arrow-right"></i>
+</a>
+                        </div>
+                    </div>
+                    
+                    <div class="news-card">
+<img src="./rep/16.jpg" alt="Virat Kohli" class="news-image" style="width: 400px; height: auto;">                        <div class="news-content">
+                        <div class="news-content">
+                            <div class="news-date">August 2, 2025</div>
+                            <h3 class="news-title">Bumrah's 5/10 Destroys England</h3>
+                            <p class="news-excerpt">Jasprit Bumrah produced a magical spell of fast bowling to dismantle England's batting lineup, taking 5 wickets for just 10 runs.</p>
+                            <a href="#" class="news-link">Read More <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                    </div>
+                    <div class="news-card">
+<img src="./rep/17.jpg" alt="Virat Kohli" class="news-image" style="width: 400px; height: auto;">                        <div class="news-content">
+                        <div class="news-content">
+                            <div class="news-date">July 30, 2025</div>
+                            <h3 class="news-title">Warner Announces Retirement After World Cup</h3>
+                            <p class="news-excerpt">Australian opener David Warner has confirmed he will retire from international cricket after the conclusion of the T20 World Cup 2025.</p>
+                            <a href="#" class="news-link">Read More <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            
+        </section>
+        
+        <!-- Testimonials Section -->
+        <section id="testimonials">
+            <div class="testimonials-section">
+                <h2 class="section-title">USER TESTIMONIALS</h2>
+                <div class="testimonials-slider">
+                    <div class="testimonial-card">
+                        <p class="testimonial-content">"CricketBet transformed my match experience! The VIP seats I won through bidding gave me access to areas I never dreamed of. The food, the view, the atmosphere - everything was perfect!"</p>
+                        <div class="testimonial-author">
+                            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Rahul Sharma" class="author-avatar">
+                            <div class="author-info">
+                                <span class="author-name">Rahul Sharma</span>
+                                <span class="author-title">Premium Member since 2023</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="testimonial-card">
+                        <p class="testimonial-content">"I've been using CricketBet for all major tournaments. Their betting platform is so intuitive and the odds are competitive. I've won over ₹2 lakhs in the past year alone!"</p>
+                        <div class="testimonial-author">
+                            <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Priya Patel" class="author-avatar">
+                            <div class="author-info">
+                                <span class="author-name">Priya Patel</span>
+                                <span class="author-title">Verified Bettor</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="testimonial-card">
+                        <p class="testimonial-content">"The seat bidding process is transparent and exciting. I got silver tickets for the semifinal at just ₹38,000 when market price was ₹60,000! Will definitely use again."</p>
+                        <div class="testimonial-author">
+                            <img src="https://randomuser.me/api/portraits/men/67.jpg" alt="Amit Joshi" class="author-avatar">
+                            <div class="author-info">
+                                <span class="author-name">Amit Joshi</span>
+                                <span class="author-title">First-time User</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- FAQ Section -->
+        <section id="faq">
+            <div class="faq-section">
+                <h2 class="section-title">FREQUENTLY ASKED QUESTIONS</h2>
+                <div class="faq-container">
+                    <div class="faq-item" onclick="toggleFAQ(1)">
+                        <div class="faq-question">
+                            <span>How does the seat bidding process work?</span>
+                            <i class="fas fa-chevron-down faq-toggle"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Our seat bidding system allows you to bid on premium seats for major cricket matches. You can place bids on available seats, and the highest bidder when the auction closes wins the seats. All bids are binding, so ensure you're committed before placing a bid.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item" onclick="toggleFAQ(2)">
+                        <div class="faq-question">
+                            <span>What payment methods do you accept?</span>
+                            <i class="fas fa-chevron-down faq-toggle"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>We accept all major credit/debit cards (Visa, MasterCard, American Express), UPI payments (Google Pay, PhonePe, Paytm), net banking, and digital wallets. All transactions are secured with 256-bit SSL encryption.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item" onclick="toggleFAQ(3)">
+                        <div class="faq-question">
+                            <span>Can I cancel or modify my bid?</span>
+                            <i class="fas fa-chevron-down faq-toggle"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Bids cannot be canceled once placed, as they are legally binding commitments. However, you may increase your bid amount at any time before the auction closes by placing a new higher bid.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item" onclick="toggleFAQ(4)">
+                        <div class="faq-question">
+                            <span>How are betting odds calculated?</span>
+                            <i class="fas fa-chevron-down faq-toggle"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Our odds are calculated by a team of expert analysts considering team form, player performance, pitch conditions, weather, and other relevant factors. Odds may fluctuate based on these variables and betting patterns.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item" onclick="toggleFAQ(5)">
+                        <div class="faq-question">
+                            <span>What happens if a match is canceled?</span>
+                            <i class="fas fa-chevron-down faq-toggle"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>If a match is canceled before a ball is bowled, all seat bids will be refunded in full, and any placed bets will be voided with stakes returned. If the match starts but is later abandoned, our cancellation policy will apply based on the specific circumstances.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Newsletter Section -->
+        <section id="newsletter">
+            <div class="newsletter-section">
+                <div class="newsletter-content">
+                    <h2 class="newsletter-title">STAY UPDATED</h2>
+                    <p class="newsletter-text">Subscribe to our newsletter for exclusive match updates, betting tips, and early access to premium seat auctions.</p>
+                    <form class="newsletter-form">
+                        <input type="email" class="newsletter-input" placeholder="Enter your email address" required>
+                        <button type="submit" class="newsletter-button">SUBSCRIBE NOW</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>CRICKETBET</h3>
+                <ul>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> About Us</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Careers</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Press Center</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>HELP & SUPPORT</h3>
+                <ul>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Help Center</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Safety Tips</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Responsible Betting</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Privacy Policy</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Terms of Service</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>QUICK LINKS</h3>
+                <ul>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Upcoming Matches</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Tournament Calendar</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Player Rankings</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Stadium Guides</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Betting Guide</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>CONNECT WITH US</h3>
+                <div class="social-links">
+                    <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-telegram"></i></a>
+                </div>
+                <h3 class="mt-4">PAYMENT METHODS</h3>
+                <div class="payment-methods">
+                    <div class="payment-method"><i class="fab fa-cc-visa"></i></div>
+                    <div class="payment-method"><i class="fab fa-cc-mastercard"></i></div>
+                    <div class="payment-method"><i class="fab fa-cc-paypal"></i></div>
+                    <div class="payment-method"><i class="fas fa-rupee-sign"></i></div>
+                    <div class="payment-method"><i class="fas fa-wallet"></i></div>
+                </div>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>© 2025 CricketBet. All Rights Reserved. CricketBet is operated by Premium Cricket Experiences Pvt. Ltd.</p>
+            <p class="mt-1">Warning: Betting involves risk. Please gamble responsibly. Must be 18+ to participate.</p>
+        </div>
+    </footer>
+    
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content animate-slideUp">
+            <span class="close-modal" onclick="closeModal('loginModal')">&times;</span>
+            <div class="modal-header">
+                <h2>WELCOME BACK</h2>
+                <p>Sign in to access your account and continue your cricket journey</p>
+            </div>
+            <form class="login-form">
+                <div class="form-group">
+                    <label for="loginEmail" class="form-label">Email Address</label>
+                    <input type="email" id="loginEmail" class="form-input" placeholder="Enter your email" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword" class="form-label">Password</label>
+                    <input type="password" id="loginPassword" class="form-input" placeholder="Enter your password" required>
+                </div>
+                <div class="form-options">
+                    <div class="remember-me">
+                        <input type="checkbox" id="rememberMe">
+                        <label for="rememberMe">Remember me</label>
+                    </div>
+                    <a href="#" class="forgot-password">Forgot password?</a>
+                </div>
+                <button type="submit" class="modal-button">SIGN IN</button>
+                
+                <div class="social-login">
+                    <div class="social-login-title">
+                        <span>Or sign in with</span>
+                    </div>
+                    <div class="social-login-buttons">
+                        <a href="#" class="social-login-button facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-login-button google"><i class="fab fa-google"></i></a>
+                        <a href="#" class="social-login-button twitter"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+                
+                <div class="register-link">
+                    <p>Don't have an account? <a href="#" onclick="showRegisterModal()">Register here</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Wallet Modal -->
+    <div id="walletModal" class="modal">
+        <div class="modal-content animate-slideUp">
+            <span class="close-modal" onclick="closeModal('walletModal')">&times;</span>
+            <div class="modal-header">
+                <h2>MY WALLET</h2>
+                <p>Manage your funds and transaction history</p>
+            </div>
+            <div class="transaction-details">
+                <div class="detail-row">
+                    <span class="detail-label">Available Balance</span>
+                    <span class="detail-value highlight-value">₹25,750</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Total Deposits</span>
+                    <span class="detail-value">₹50,000</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Total Withdrawals</span>
+                    <span class="detail-value">₹12,500</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Active Bids</span>
+                    <span class="detail-value">₹11,750</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Active Bets</span>
+                    <span class="detail-value">₹5,000</span>
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button class="modal-button" onclick="showDepositModal()"><i class="fas fa-rupee-sign"></i> DEPOSIT</button>
+                <button class="modal-button secondary" onclick="showWithdrawModal()"><i class="fas fa-wallet"></i> WITHDRAW</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Bet Confirmation Modal -->
+    <div id="betModal" class="modal">
+        <div class="modal-content animate-slideUp">
+            <span class="close-modal" onclick="closeModal('betModal')">&times;</span>
+            <div class="modal-header">
+                <h2>CONFIRM YOUR BET</h2>
+                <p>Review your bet details before confirmation</p>
+            </div>
+            <div class="transaction-details">
+                <div class="detail-row">
+                    <span class="detail-label">Bet Type</span>
+                    <span class="detail-value" id="betTypeValue">Match Winner - India</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Odds</span>
+                    <span class="detail-value" id="betOddsValue">1.85</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Stake Amount</span>
+                    <span class="detail-value" id="betAmountValue">₹5,000</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Potential Win</span>
+                    <span class="detail-value highlight-value" id="betWinValue">₹9,250</span>
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button class="modal-button" onclick="confirmBet()"><i class="fas fa-check"></i> CONFIRM BET</button>
+                <button class="modal-button secondary" onclick="closeModal('betModal')"><i class="fas fa-times"></i> CANCEL</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Bid Confirmation Modal -->
+    <div id="bidModal" class="modal">
+        <div class="modal-content animate-slideUp">
+            <span class="close-modal" onclick="closeModal('bidModal')">&times;</span>
+            <div class="modal-header">
+                <h2>CONFIRM YOUR BID</h2>
+                <p>Review your bid details before confirmation</p>
+            </div>
+            <div class="transaction-details">
+                <div class="detail-row">
+                    <span class="detail-label">Seat Category</span>
+                    <span class="detail-value" id="bidCategoryValue">Gold - Premium Stand</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Current Price</span>
+                    <span class="detail-value">₹75,000</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Your Bid Amount</span>
+                    <span class="detail-value highlight-value" id="bidAmountValue">₹80,000</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Bid Expires In</span>
+                    <span class="detail-value">2 days 4 hours</span>
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button class="modal-button" onclick="confirmBid()"><i class="fas fa-gavel"></i> PLACE BID</button>
+                <button class="modal-button secondary" onclick="closeModal('bidModal')"><i class="fas fa-times"></i> CANCEL</button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Modal Functions
+        function showLoginModal() {
+            document.getElementById('loginModal').style.display = 'block';
+        }
+        
+        function showWalletModal() {
+            document.getElementById('walletModal').style.display = 'block';
+        }
+        
+        function showBetModal(type, odds, amount) {
+            document.getElementById('betTypeValue').textContent = type;
+            document.getElementById('betOddsValue').textContent = odds;
+            document.getElementById('betAmountValue').textContent = '₹' + amount;
+            document.getElementById('betWinValue').textContent = '₹' + (amount * odds).toFixed(2);
+            document.getElementById('betModal').style.display = 'block';
+        }
+        
+        function showBidModal(category, amount) {
+            document.getElementById('bidCategoryValue').textContent = category;
+            document.getElementById('bidAmountValue').textContent = '₹' + amount;
+            document.getElementById('bidModal').style.display = 'block';
+        }
+        
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+        
+        function confirmBet() {
+            alert('Your bet has been placed successfully!');
+            closeModal('betModal');
+        }
+        
+        function confirmBid() {
+            alert('Your bid has been placed successfully!');
+            closeModal('bidModal');
+        }
+        
+        // Betting Functions
+        function placeBet(type) {
+            let amount = document.getElementById('match-bet-amount').value;
+            if (!amount || amount < 100) {
+                alert('Please enter a valid bet amount (minimum ₹100)');
+                return;
+            }
+            
+            let betType, odds;
+            if (type === 'match') {
+                betType = 'Match Winner - India';
+                odds = 1.85;
+            } else if (type === 'Kohli') {
+                betType = 'Top Batsman - Virat Kohli';
+                odds = 4.50;
+            } else if (type === 'Warner') {
+                betType = 'Top Batsman - David Warner';
+                odds = 5.25;
+            } else if (type === 'Bumrah') {
+                betType = 'Top Bowler - Jasprit Bumrah';
+                odds = 6.00;
+            } else if (type === 'Maxwell') {
+                betType = 'Player Performance - Glenn Maxwell';
+                odds = 7.50;
+            }
+            
+            showBetModal(betType, odds, amount);
+        }
+        
+        function placePlayerBet(player) {
+            let amount = prompt('Enter bet amount (minimum ₹100):', '1000');
+            if (!amount || amount < 100) {
+                alert('Please enter a valid bet amount (minimum ₹100)');
+                return;
+            }
+            
+            placeBet(player);
+        }
+        
+        // Bidding Functions
+        function placeBid(tier) {
+            let inputField = document.querySelector(`.${tier}-tier .bid-input`);
+            let amount = inputField.value;
+            let minAmount = parseInt(inputField.min);
+            
+            if (!amount || amount < minAmount) {
+                alert(`Please enter a valid bid amount (minimum ₹${minAmount.toLocaleString()})`);
+                return;
+            }
+            
+            let category;
+            if (tier === 'platinum') {
+                category = 'Platinum - VIP Pavilion';
+            } else if (tier === 'gold') {
+                category = 'Gold - Premium Stand';
+            } else if (tier === 'silver') {
+                category = 'Silver - Grand Stand';
+            } else if (tier === 'bronze') {
+                category = 'Bronze - General Stand';
+            }
+            
+            showBidModal(category, amount);
+        }
+        
+        // FAQ Function
+        function toggleFAQ(index) {
+            const faqItem = document.querySelectorAll('.faq-item')[index - 1];
+            faqItem.classList.toggle('active');
+        }
+        
+        // Navigation Functions
+        function showBiddingSection() {
+            document.getElementById('bidding').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        function showBettingSection() {
+            document.getElementById('betting').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // Initialize animations
+        document.addEventListener('DOMContentLoaded', function() {
+            const elements = document.querySelectorAll('.card, .section-title, .performer');
+            elements.forEach((el, index) => {
+                setTimeout(() => {
+                    el.classList.add('animate-fadeIn');
+                }, index * 100);
+            });
+        });
+    </script>
+    <!-- Arduino Bid WebSocket Integration -->
+<script>
+  // Connect to WebSocket server
+  const bidSocket = new WebSocket("wss://echo.websocket.events");
+  
+  // Handle incoming bids
+  bidSocket.onmessage = function(event) {
+    try {
+      const bidData = JSON.parse(event.data);
+      
+      // Update your existing UI (customize this part)
+      if (bidData.action === "place_bid") {
+        // Option 1: Show notification
+        showBidNotification(`New bid: ${bidData.seat} - $${bidData.amount}`);
+        
+        // Option 2: Update specific seat element
+        updateSeatBid(bidData.seat, bidData.amount);
+      }
+    } catch (e) {
+      console.error("Error processing bid:", e);
+    }
+  };
+
+  // Helper functions (customize these)
+  function showBidNotification(message) {
+    // Create or use existing notification system
+    const notification = document.createElement('div');
+    notification.className = 'bid-notification';
+    notification.textContent = message;
+    document.body.appendChild(notification);
+    setTimeout(() => notification.remove(), 3000);
+  }
+
+  function updateSeatBid(seatId, amount) {
+  // Example for different HTML structure:
+  const seatElement = document.getElementById("seat-" + seatId);
+  if (seatElement) {
+    seatElement.querySelector(".price").textContent = "$" + amount;
+    seatElement.classList.add("new-bid");
+  }
+}
+</script>
+
+<style>
+  /* Optional notification styling */
+  .bid-notification {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #4CAF50;
+    color: white;
+    padding: 12px;
+    border-radius: 4px;
+    z-index: 1000;
+  }
+  <!-- Existing WebSocket Integration (keep this as-is) -->
+<script>
+  const socket = new WebSocket("wss://echo.websocket.events");
+
+  socket.onmessage = (event) => {
+    const bid = JSON.parse(event.data);
+    if (bid.action === "place_bid") {
+      // Update UI for the specific seat
+      const seatElement = document.querySelector(`[data-seat="${bid.seat}"]`);
+      if (seatElement) {
+        seatElement.querySelector('.bid-amount').textContent = bid.amount;
+        seatElement.classList.add('active-bid');
+      }
+    }
+  };
+</script>
+<!-- Premium Seats (P) -->
+<div data-seat="P1" class="seat premium">
+  <span class="seat-label">P1</span>
+  <span class="bid-amount">0</span>
+  <span class="seat-price">Base: $25,000</span>
+</div>
+<div data-seat="P2" class="seat premium">
+  <span class="seat-label">P2</span>
+  <span class="bid-amount">0</span>
+  <span class="seat-price">Base: $25,000</span>
+</div>
+
+<!-- Gold Seats (G) -->
+<div data-seat="G5" class="seat gold">
+  <span class="seat-label">G5</span>
+  <span class="bid-amount">0</span>
+  <span class="seat-price">Base: $15,000</span>
+</div>
+<div data-seat="G8" class="seat gold">
+  <span class="seat-label">G8</span>
+  <span class="bid-amount">0</span>
+  <span class="seat-price">Base: $15,000</span>
+</div>
+
+<!-- Silver Seats (S) -->
+<div data-seat="S12" class="seat silver">
+  <span class="seat-label">S12</span>
+  <span class="bid-amount">0</span>
+  <span class="seat-price">Base: $10,000</span>
+</div>
+<div data-seat="S15" class="seat silver">
+  <span class="seat-label">S15</span>
+  <span class="bid-amount">0</span>
+  <span class="seat-price">Base: $10,000</span>
+</div>
+
+<!-- Bronze Seats (B) -->
+<div data-seat="B22" class="seat bronze">
+  <span class="seat-label">B22</span>
+  <span class="bid-amount">0</span>
+  <span class="seat-price">Base: $5,000</span>
+</div>
+<div data-seat="B30" class="seat bronze">
+  <span class="seat-label">B30</span>
+  <span class="bid-amount">0</span>
+  <span class="seat-price">Base: $5,000</span>
+</div>
+
+<!-- Optional: Add this CSS if not already present -->
+<style>
+  .seat {
+    padding: 12px;
+    margin: 8px;
+    border-radius: 4px;
+    background: #f5f5f5;
+    border-left: 4px solid #ccc;
+  }
+  
+  .premium { border-left-color: #ff5722; } /* Orange */
+  .gold    { border-left-color: #ffc107; } /* Yellow */
+  .silver  { border-left-color: #9e9e9e; } /* Gray */
+  .bronze  { border-left-color: #cd7f32; } /* Bronze */
+  
+  .bid-amount {
+    font-weight: bold;
+    color: #2196F3;
+    margin-left: 10px;
+  }
+  
+  .seat-price {
+    display: block;
+    font-size: 0.8em;
+    color: #666;
+  }
+  
+  .active-bid {
+    animation: pulse 1s;
+    background: #e8f5e9;
+  }
+  
+  @keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.03); }
+    100% { transform: scale(1); }
+  }
+</style>
+</style>
+</body>
+</html>
